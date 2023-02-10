@@ -18,8 +18,8 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tckn", unique = true, nullable = false)
-    private long tckn;
+    @Column(name = "tckn", unique = true, nullable = false, length = 11)
+    private String tckn;
 
     @Column(name = "first_name")
     private String firstName;
@@ -28,7 +28,7 @@ public class User{
 
     private String lastName;
 
-    @Column(name = "gsm_number")
+    @Column(name = "gsm_number", length = 10)
     private String gsmNumber;
 
     @Column(name = "date_of_birth")
@@ -38,7 +38,7 @@ public class User{
     @Column(name = "role", nullable = false)
     private Role role;
 
-    public User(long tckn, String firstName, String lastName, String gsmNumber, Date dateOfBirth, Role role) {
+    public User(String tckn, String firstName, String lastName, String gsmNumber, Date dateOfBirth, Role role) {
         this.tckn = tckn;
         this.firstName = firstName;
         this.lastName = lastName;
