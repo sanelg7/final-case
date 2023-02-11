@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString(exclude = {})
 public class User{
 
     @Id
@@ -25,7 +27,6 @@ public class User{
     private String firstName;
 
     @Column(name = "last_name")
-
     private String lastName;
 
     @Column(name = "gsm_number", length = 10)
