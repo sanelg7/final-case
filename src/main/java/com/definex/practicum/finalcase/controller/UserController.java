@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.exception.UserNotFoundException;
+import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;
 import com.definex.practicum.finalcase.model.User;
 import com.definex.practicum.finalcase.service.UserService;
@@ -40,7 +40,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User user){
         if(!userService.existsById(id)){
-            throw new UserNotFoundException(id);
+            throw new EntityNotFoundException(User.class.getName(),id);
         }
         try {
             User updatedUser = userService.update(id, user);
@@ -53,7 +53,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         if(!userService.existsById(id)){
-            throw new UserNotFoundException(id);
+            throw new EntityNotFoundException(User.class.getName(), id);
         }
         userService.delete(id);
         return ResponseEntity.noContent().build();
