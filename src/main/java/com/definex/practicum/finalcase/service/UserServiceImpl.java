@@ -1,5 +1,6 @@
 package com.definex.practicum.finalcase.service;
 
+import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;
 import com.definex.practicum.finalcase.model.User;
 import com.definex.practicum.finalcase.repository.UserRepository;
@@ -62,22 +63,21 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void delete(Long id) {
-
+        userRepository.deleteById(id);
     }
 
     @Override
     public User findById(Long id) {
-        User temp = userRepository.findById(id).get();
-        return temp;
+        if(!existsById(id)){
+            throw new EntityNotFoundException(User.class.getName(), id);
+        }
+        return userRepository.findById(id).get();
     }
 
     @Override
     public boolean existsById(Long id){
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
-            return true;
-        }
-        return false;
+        boolean exists = userRepository.existsById(id);
+        return exists;
     }
 
 

@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.aop;
 
-import com.definex.practicum.finalcase.exception.UserNotFoundException;
+import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;
 import com.definex.practicum.finalcase.model.User;
 import org.aspectj.lang.JoinPoint;
@@ -45,7 +45,7 @@ public class UserLoggingAspect {
 
     // Handles the logging of both exceptions.
     @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.controller.UserController.*(..))", throwing = "ex")
-    public void afterThrowingControllerLogging(JoinPoint joinPoint, UserNotFoundException ex){
+    public void afterThrowingControllerLogging(JoinPoint joinPoint, EntityNotFoundException ex){
         LOGGER.error("User required by method not found." + "Method: " + joinPoint.getSignature().getName() + " with args: " + joinPoint.getArgs());
 
     }
