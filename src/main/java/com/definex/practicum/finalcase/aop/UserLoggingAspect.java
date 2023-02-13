@@ -1,11 +1,10 @@
 package com.definex.practicum.finalcase.aop;
 
+import com.definex.practicum.finalcase.exception.UserNotFoundException;
+import com.definex.practicum.finalcase.exception.UserUpdateException;
 import com.definex.practicum.finalcase.model.User;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -36,6 +35,19 @@ public class UserLoggingAspect {
     public void afterReturningControllerLogging(JoinPoint joinPoint, Object result){
         LOGGER.info("Request : " + joinPoint.getSignature().getName() +  ", Returned: "
                 + result);
+    }
+
+    @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.service.UserServiceImpl.update(..))", throwing = "ex")
+    public void afterThrowingServiceLogging(JoinPoint joinPoint, UserUpdateException ex) {
+        User user = (User) joinPoint.getArgs()[0];
+        LOGGER.error("Error while updating user: " + user + " ,  " + ex.getMessage());
+    }
+
+    // Handles the logging of both exceptions.
+    @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.controller.UserController.*(..))", throwing = "ex")
+    public void afterThrowingControllerLogging(JoinPoint joinPoint, UserNotFoundException ex){
+        LOGGER.error("User required by method not found." + "Method: " + joinPoint.getSignature().getName() + " with args: " + joinPoint.getArgs());
+
     }
 
  /*   @Before("userServiceMethods()")
