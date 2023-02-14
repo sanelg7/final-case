@@ -4,9 +4,9 @@ import com.definex.practicum.finalcase.model.CreditScore;
 
 public interface CreditScoreService {
 
-    double generateCreditScore();
-    CreditScore saveCreditScore(Long userId);
+    double generateCreditScoreValue();
+    CreditScore createCreditScore(Long userId);
     void deleteCreditScore(Long id);
-    CreditScore getCreditScoreById(Long id);
-    CreditScore updateCreditScore(CreditScore creditScore);
+    CreditScore getCreditScore(Long id);
+    CreditScore updateCreditScore(Long id, CreditScore creditScore);
 }

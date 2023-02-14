@@ -24,50 +24,50 @@ public class CreditScoreServiceImpl implements CreditScoreService{
         this.userRepository = userRepository;
     }
 
-    // Used for both save and update operations. No hard logic. Saves the generated value.
+    // CreditScore is generated randomly with the help of generateCreditScoreValue(). No value is passed from the controller.
     @Override
-    public CreditScore saveCreditScore(Long userId) {
+    public CreditScore createCreditScore(Long userId) throws EntityNotFoundException{
         if(!userRepository.existsById(userId)){
             throw new EntityNotFoundException(User.class.getName(), userId);
         }
         CreditScore creditScore = new CreditScore();
-        creditScore.setCreditScore(generateCreditScore());
+        creditScore.setCreditScore(generateCreditScoreValue());
         User user = userRepository.findById(userId).get();
         user.setCreditScore(creditScore);
         return user.getCreditScore();
     }
 
-    // User id is not passed as both entities are already related.
-    @Override
-    public CreditScore updateCreditScore(CreditScore creditScore){
-        if(!creditScoreRepository.existsById(creditScore.getId())){
-            throw new EntityNotFoundException(CreditScore.class.getName(), creditScore.getId());
-        }
-        CreditScore updatedCreditScore = creditScoreRepository.findById(creditScore.getId()).get();
-        updatedCreditScore.setCreditScore(generateCreditScore());
-        return creditScoreRepository.save(updatedCreditScore);
-    }
 
     @Override
-    public void deleteCreditScore(Long id) {
-        if(!creditScoreRepository.existsById(id)){
-            throw new EntityNotFoundException(CreditScore.class.getName(), id);
-        }
-        creditScoreRepository.deleteById(id);
-    }
-
-    @Override
-    public CreditScore getCreditScoreById(Long id){
+    public CreditScore getCreditScore(Long id) throws EntityNotFoundException{
         if(!creditScoreRepository.existsById(id)){
             throw new EntityNotFoundException(CreditScore.class.getName(), id);
         }
         return creditScoreRepository.findById(id).get();
     }
 
+    // User id is not passed as both entities are already related.
+    @Override
+    public CreditScore updateCreditScore (Long id, CreditScore creditScore) throws EntityNotFoundException{
+        if(!creditScoreRepository.existsById(id)){
+            throw new EntityNotFoundException(CreditScore.class.getName(), id);
+        }
+        CreditScore updatedCreditScore = creditScoreRepository.findById(id).get();
+        updatedCreditScore.setCreditScore(generateCreditScoreValue());
+        return creditScoreRepository.save(updatedCreditScore);
+    }
+
+    @Override
+    public void deleteCreditScore(Long id) throws EntityNotFoundException{
+        if(!creditScoreRepository.existsById(id)){
+            throw new EntityNotFoundException(CreditScore.class.getName(), id);
+        }
+        creditScoreRepository.deleteById(id);
+    }
 
     // Generates a random credit score between 250 and 1300.
     @Override
-    public double generateCreditScore() {
+    public double generateCreditScoreValue() {
         Random random = new Random();
         double score = random.nextDouble((1300 - 250) + 1) + 250;
         return score;
