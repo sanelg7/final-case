@@ -17,6 +17,7 @@ public class EntityNotFoundException extends RuntimeException{
         this.type = type;
     }
 
+    // Specific to when searching a user by their tckn
     public EntityNotFoundException(String type, String tckn){
         super(String.format("User with tckn: " + tckn + " not found"));
         this.type = type;

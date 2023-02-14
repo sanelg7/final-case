@@ -31,4 +31,17 @@ public class CreditLimitApplication {
 
     @Column(name = "guarantee")
     private Double guarantee;
+
+    public CreditLimitApplication(User user, Boolean approved, Double monthlyIncome, Double guarantee){
+        this.user = user;
+        this.approved = approved;
+        this.monthlyIncome = monthlyIncome;
+        this.guarantee = guarantee;
+    }
+    public CreditLimitApplication(User user, Boolean approved, Double monthlyIncome){
+        this.user = user;
+        this.approved = approved;
+        this.monthlyIncome = monthlyIncome;
+    }
+
 }
