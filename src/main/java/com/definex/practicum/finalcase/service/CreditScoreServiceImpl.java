@@ -8,6 +8,7 @@ import com.definex.practicum.finalcase.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -33,8 +34,9 @@ public class CreditScoreServiceImpl implements CreditScoreService{
         CreditScore creditScore = new CreditScore();
         creditScore.setCreditScore(generateCreditScoreValue());
         User user = userRepository.findById(userId).get();
-        user.setCreditScore(creditScore);
-        return user.getCreditScore();
+        creditScore.setUser(user);
+        return creditScoreRepository.save(creditScore);
+        //user.setCreditScore(creditScore);
     }
 
 
@@ -73,5 +75,13 @@ public class CreditScoreServiceImpl implements CreditScoreService{
         return score;
     }
 
+    @Override
+    public Boolean existsByUserTckn(String userTckn){
+        Optional<CreditScore> creditScoreOptional = creditScoreRepository.findByUserTckn(userTckn);
+        if(creditScoreOptional.isPresent()){
+            return true;
+        }
+        return false;
+    }
 
 }

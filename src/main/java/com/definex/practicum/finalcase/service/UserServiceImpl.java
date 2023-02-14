@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService{
     So they would need two accounts in that case, hence ROLE can not be changed either.
     */
     @Override
-    public User updateUser(Long id, User user) throws EntityNotFoundException{
+    public User updateUser(Long id, User user) throws EntityNotFoundException, UserUpdateException{
         if(!existsById(id)){
             throw new EntityNotFoundException(User.class.getName(), id);
         }
@@ -73,10 +73,7 @@ public class UserServiceImpl implements UserService{
             return userRepository.save(updatedUser);
         }
          else {
-             // TODO: Check this in the morning
-            throw new UserUpdateException("Can not update tckn, date of birth and role fields. Received : "
-                    + user.getTckn() + ", " + user.getDateOfBirth() + ", " + user.getRole() +
-                    " For user:" + updatedUser);
+            throw new UserUpdateException(user.getTckn(), user.getDateOfBirth(), user.getGsmNumber());
         }
     }
 
