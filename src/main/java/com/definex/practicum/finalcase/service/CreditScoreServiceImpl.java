@@ -13,7 +13,7 @@ import java.util.Random;
 @Service
 public class CreditScoreServiceImpl implements CreditScoreService{
 
-    private CreditScoreRepository creditScoreRepository;
+    private final CreditScoreRepository creditScoreRepository;
     private final UserRepository userRepository;
 
 

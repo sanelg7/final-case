@@ -1,6 +1,5 @@
 package com.definex.practicum.finalcase.aop;
 
-import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;
 import com.definex.practicum.finalcase.model.User;
 import org.aspectj.lang.JoinPoint;
@@ -37,7 +36,7 @@ public class ControllerLoggingAspect {
                 + result);
     }
 
-    @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.service.UserServiceImpl.update(..))", throwing = "ex")
+    @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.service.UserServiceImpl.updateUser(..))", throwing = "ex")
     public void afterThrowingServiceLogging(JoinPoint joinPoint, UserUpdateException ex) {
         User user = (User) joinPoint.getArgs()[0];
         LOGGER.error("Error while updating user: " + user + " ,  " + ex.getMessage());
