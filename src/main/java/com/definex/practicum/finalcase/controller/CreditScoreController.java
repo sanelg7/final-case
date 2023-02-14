@@ -20,7 +20,7 @@ public class CreditScoreController {
     }
 
     @GetMapping
-    public CustomResponseEntity<CreditScore> getCreditScoreById(@RequestParam("id") Long id){
+    public CustomResponseEntity<CreditScore> getCreditScore(@RequestParam("id") Long id){
         try{
             return new CustomResponseEntity<>(creditScoreService.getCreditScore(id),
                     "Fetched credit score",HttpStatus.OK);

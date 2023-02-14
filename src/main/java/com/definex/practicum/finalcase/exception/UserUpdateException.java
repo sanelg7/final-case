@@ -1,12 +1,24 @@
 package com.definex.practicum.finalcase.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import java.util.Date;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UserUpdateException extends RuntimeException{
-    public UserUpdateException(String message) {
-        super(message);
+
+    String tckn;
+    Date dateOfBirth;
+    String gsmNumber;
+
+    public UserUpdateException(String tckn, Date dateOfBirth, String gsmNumber) {
+        super(String.format("tckn, dateOfBirth and gsmNumber can not be changed."
+        + "Passed in: tckn=" + tckn + " , gsmNumber=" + gsmNumber + " , dateOfBirth=" + dateOfBirth));
+        this.tckn=tckn;
+        this.dateOfBirth=dateOfBirth;
+        this.gsmNumber=gsmNumber;
     }
 
 }
