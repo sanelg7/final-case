@@ -13,25 +13,25 @@ import java.util.Arrays;
 
 @Aspect
 @Component
-public class UserLoggingAspect {
+public class ControllerLoggingAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserLoggingAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerLoggingAspect.class);
 
     // Pointcut for Controller methods.
-    @Pointcut("execution(* com.definex.practicum.finalcase.controller.UserController.*(..))")
-    public void userControllerMethods(){}
+    @Pointcut("execution(* com.definex.practicum.finalcase.controller.*.*(..))")
+    public void controllerMethodsPointcut(){}
 /*
     // Pointcut for Service methods.
     @Pointcut("execution(* com.definex.practicum.finalcase.service.UserService.*(..))")
     public void userServiceMethods(){}
 */
 
-    @Before("userControllerMethods()")
+    @Before("controllerMethodsPointcut()")
     public void beforeControllerLogging(JoinPoint joinPoint){
         LOGGER.info("Received request : " + joinPoint.getSignature().getName() + ", with args: "
                 + Arrays.toString(joinPoint.getArgs()));
     }
-    @AfterReturning(value = "userControllerMethods()", returning = "result")
+    @AfterReturning(value = "controllerMethodsPointcut()", returning = "result")
     public void afterReturningControllerLogging(JoinPoint joinPoint, Object result){
         LOGGER.info("Request : " + joinPoint.getSignature().getName() +  ", Returned: "
                 + result);
@@ -44,11 +44,12 @@ public class UserLoggingAspect {
     }
 
     // Handles the logging of both exceptions.
-    @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.controller.UserController.*(..))", throwing = "ex")
+   /* @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.controller.UserController.*(..))", throwing = "ex")
     public void afterThrowingControllerLogging(JoinPoint joinPoint, EntityNotFoundException ex){
+
         LOGGER.error("User required by method not found." + "Method: " + joinPoint.getSignature().getName() + " with args: " + joinPoint.getArgs());
 
-    }
+    }*/
 
  /*   @Before("userServiceMethods()")
     public void userServiceLogging(JoinPoint joinPoint){
