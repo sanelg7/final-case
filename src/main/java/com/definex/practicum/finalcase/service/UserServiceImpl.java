@@ -63,9 +63,7 @@ public class UserServiceImpl implements UserService{
             throw new EntityNotFoundException(User.class.getName(), id);
         }
         User updatedUser = userRepository.findById(id).get();
-        if(updatedUser.getTckn() != user.getTckn() ||
-           updatedUser.getRole() != user.getRole() ||
-           updatedUser.getDateOfBirth() != user.getDateOfBirth()){
+        if(goodToUpdate(user, updatedUser)){
 
             updatedUser.setGsmNumber(user.getGsmNumber());
             updatedUser.setFirstName(user.getFirstName());
@@ -93,4 +91,12 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    private boolean goodToUpdate(User user, User requestBody){
+        if(user.getTckn().equals(requestBody.getTckn())
+        && user.getRole().equals(requestBody.getRole())
+        && user.getDateOfBirth().equals(requestBody.getDateOfBirth())){
+            return true;
+        }
+        return false;
+    }
 }

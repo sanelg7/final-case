@@ -36,11 +36,11 @@ public class ControllerLoggingAspect {
                 + result);
     }
 
-    @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.service.UserServiceImpl.updateUser(..))", throwing = "ex")
+    /*@AfterThrowing(value = "execution(* com.definex.practicum.finalcase.service.UserServiceImpl.updateUser(..))", throwing = "ex")
     public void afterThrowingServiceLogging(JoinPoint joinPoint, UserUpdateException ex) {
         User user = (User) joinPoint.getArgs()[0];
         LOGGER.error("Error while updating user: " + user + " ,  " + ex.getMessage());
-    }
+    }*/
 
     // Handles the logging of both exceptions.
    /* @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.controller.UserController.*(..))", throwing = "ex")
