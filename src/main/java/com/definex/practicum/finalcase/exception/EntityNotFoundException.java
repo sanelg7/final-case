@@ -1,5 +1,6 @@
 package com.definex.practicum.finalcase.exception;
 
+import com.definex.practicum.finalcase.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,8 @@ public class EntityNotFoundException extends RuntimeException{
 
     // Specific to when searching a user by their tckn
     public EntityNotFoundException(String type, String tckn){
-        super(String.format("User with tckn: " + tckn + " not found"));
+        super(type.equals(User.class.getName()) ? String.format("User with tckn: %s not found", tckn)
+                : String.format("Entity bound to user with tckn: %s not found", tckn));
         this.type = type;
         this.tckn = tckn;
     }
