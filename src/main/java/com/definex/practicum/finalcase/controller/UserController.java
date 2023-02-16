@@ -45,7 +45,7 @@ public class UserController {
             return new CustomResponseEntity<>(userService.createUser(user), "User created successfully", HttpStatus.CREATED);
         } catch (EntityCreationException e) {
             //TODO: Check http status
-            return new CustomResponseEntity<>(null,"User created successfully", HttpStatus.BAD_REQUEST);
+            return new CustomResponseEntity<>(null,e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
