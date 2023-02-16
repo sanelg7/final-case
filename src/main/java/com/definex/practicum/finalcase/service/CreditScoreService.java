@@ -9,5 +9,7 @@ public interface CreditScoreService {
     void deleteCreditScore(Long id);
     CreditScore getCreditScore(Long id);
     CreditScore updateCreditScore(Long id, CreditScore creditScore);
-    Boolean existsByUserTckn(String userTckn);
+
+    boolean existsByUser_Tckn(String userTckn);
+
 }

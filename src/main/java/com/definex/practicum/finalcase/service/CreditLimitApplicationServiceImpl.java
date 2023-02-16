@@ -16,15 +16,17 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
     private final UserRepository userRepository;
     private final CreditLimitApplicationRepository creditLimitApplicationRepository;
     private final CreditScoreService creditScoreService;
+    private final CreditLimitService creditLimitService;
 
     @Autowired
     public CreditLimitApplicationServiceImpl(UserRepository userRepository,
-                                            CreditLimitApplicationRepository creditLimitApplicationRepository,
-                                             CreditScoreService creditScoreService){
+                                             CreditLimitApplicationRepository creditLimitApplicationRepository,
+                                             CreditScoreService creditScoreService, CreditLimitService creditLimitService){
 
                 this.creditLimitApplicationRepository = creditLimitApplicationRepository;
                 this.userRepository = userRepository;
                 this.creditScoreService = creditScoreService;
+                this.creditLimitService = creditLimitService;
     }
 
     @Override
@@ -34,21 +36,30 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
         }
         User user = userRepository.findByTckn(userTckn).get();
         // TODO: Might need to check this
-        if(!creditScoreService.existsByUserTckn(userTckn)){
+        if(!creditScoreService.existsByUser_Tckn(userTckn)){
             creditScoreService.createCreditScore(user.getId());
         }
         creditLimitApplication.setUser(user);
+
+        // Saving te application itself
+        CreditLimitApplication createdCreditLimitApplication = creditLimitApplicationRepository.save(creditLimitApplication);
+        // Set approval
+        createdCreditLimitApplication = approveCreditLimitApplication(createdCreditLimitApplication.getId(), user.getCreditScore());
+
         if(creditLimitApplication.getApproved()){
-            // TODO:Call CreditLimitService generateCreditLimit
+            // Generating a CreditLimit with the help of CreditLimitService
+            creditLimitService.createCreditLimit(userTckn, createdCreditLimitApplication);
 
         }else{
             // TODO:Return negative sms.
         }
+
         return creditLimitApplication;
+
 
     }
 
-    // Works like a regular update.
+    // Sets approval, works like a regular update on db
     @Override
     public CreditLimitApplication approveCreditLimitApplication(Long creditLimitApplicationId ,
                                                                 CreditScore creditScore) throws EntityNotFoundException{
@@ -56,13 +67,17 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
             throw new EntityNotFoundException(CreditLimitApplication.class.getName(), creditLimitApplicationId);
         }
         CreditLimitApplication creditLimitApplication = creditLimitApplicationRepository.findById(creditLimitApplicationId).get();
-        if(creditScore.getCreditScore()<500){
+        if(creditScore.getCreditScoreValue()<500){
             creditLimitApplication.setApproved(false);
 
         }else{
             creditLimitApplication.setApproved(true);
         }
-        return creditLimitApplication;
+        return creditLimitApplicationRepository.save(creditLimitApplication);
     }
+
+
+
+    // TODO: Check if approved. For users to check their application.
 
 }

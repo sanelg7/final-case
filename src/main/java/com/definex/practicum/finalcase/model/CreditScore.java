@@ -24,6 +24,6 @@ public class CreditScore {
     private User user;
 
     @Column(name = "credit_score")
-    private Double creditScore;
+    private Double creditScoreValue;
 
 }

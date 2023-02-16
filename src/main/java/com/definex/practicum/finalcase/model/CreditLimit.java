@@ -1,10 +1,7 @@
 package com.definex.practicum.finalcase.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 @Entity
@@ -25,4 +22,9 @@ public class CreditLimit {
     @OneToOne
     @JoinColumn(name = "user_tckn")
     private User user;
+
+    public CreditLimit(Double amount, User user) {
+        this.amount = amount;
+        this.user = user;
+    }
 }

@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CreditScoreRepository extends JpaRepository<CreditScore, Long> {
 
-    Optional<CreditScore> findByUserTckn(String userTckn);
+    boolean existsByUser_Tckn(String userTckn);
 }

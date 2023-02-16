@@ -32,7 +32,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
             throw new EntityNotFoundException(User.class.getName(), userId);
         }
         CreditScore creditScore = new CreditScore();
-        creditScore.setCreditScore(generateCreditScoreValue());
+        creditScore.setCreditScoreValue(generateCreditScoreValue());
         User user = userRepository.findById(userId).get();
         creditScore.setUser(user);
         return creditScoreRepository.save(creditScore);
@@ -55,9 +55,11 @@ public class CreditScoreServiceImpl implements CreditScoreService{
             throw new EntityNotFoundException(CreditScore.class.getName(), id);
         }
         CreditScore updatedCreditScore = creditScoreRepository.findById(id).get();
-        updatedCreditScore.setCreditScore(generateCreditScoreValue());
+        updatedCreditScore.setCreditScoreValue(generateCreditScoreValue());
         return creditScoreRepository.save(updatedCreditScore);
     }
+
+
 
     @Override
     public void deleteCreditScore(Long id) throws EntityNotFoundException{
@@ -76,12 +78,9 @@ public class CreditScoreServiceImpl implements CreditScoreService{
     }
 
     @Override
-    public Boolean existsByUserTckn(String userTckn){
-        Optional<CreditScore> creditScoreOptional = creditScoreRepository.findByUserTckn(userTckn);
-        if(creditScoreOptional.isPresent()){
-            return true;
-        }
-        return false;
+    public boolean existsByUser_Tckn(String userTckn){
+        return creditScoreRepository.existsByUser_Tckn(userTckn);
     }
+
 
 }
