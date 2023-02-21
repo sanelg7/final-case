@@ -34,6 +34,7 @@ public class CreditScoreController {
     In the context of this assignment, credit score is a randomly created value.
     There is no need to pass in a CreditScore object within the body. A user id to form the relationship is enough.
     The user id is passed in from the request body to only mimic the usual way (object -> request body).
+    It could've been done with RequestParam/PathVariable
     */
     @PostMapping
     public CustomResponseEntity<CreditScore> createCreditScore(@RequestBody Long userId){
@@ -45,6 +46,7 @@ public class CreditScoreController {
         }
     }
 
+    // TODO: Should be refactored for admin to use
     @PutMapping
     public CustomResponseEntity<CreditScore> updateCreditScore(@RequestParam("id") Long id, @RequestBody CreditScore creditScore){
         try{

@@ -1,5 +1,6 @@
 package com.definex.practicum.finalcase.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = {})
+@ToString(exclude = {"user"})
 public class CreditLimit {
 
     @Id
@@ -19,7 +20,8 @@ public class CreditLimit {
     @Column(name = "amount")
     private Double amount;
 
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_tckn")
     private User user;
 

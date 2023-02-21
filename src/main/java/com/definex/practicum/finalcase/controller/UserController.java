@@ -64,6 +64,7 @@ public class UserController {
         }
     }
 
+
     @DeleteMapping
     public ResponseEntity<String> delete(@RequestParam("id") Long id){
         try {

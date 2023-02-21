@@ -5,6 +5,7 @@ import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.User;
 import com.definex.practicum.finalcase.repository.CreditScoreRepository;
 import com.definex.practicum.finalcase.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +32,18 @@ public class CreditScoreServiceImpl implements CreditScoreService{
         if(!userRepository.existsById(userId)){
             throw new EntityNotFoundException(User.class.getName(), userId);
         }
+        /*User user = userRepository.findById(userId).get();
+        if (user.getCreditScore() != null){
+            user.setCreditScore(null);
+            userRepository.save(user);
+        }*/
         CreditScore creditScore = new CreditScore();
         creditScore.setCreditScoreValue(generateCreditScoreValue());
         User user = userRepository.findById(userId).get();
+        user.setCreditScore(creditScore);
         creditScore.setUser(user);
+
         return creditScoreRepository.save(creditScore);
-        //user.setCreditScore(creditScore);
     }
 
 
@@ -48,14 +55,14 @@ public class CreditScoreServiceImpl implements CreditScoreService{
         return creditScoreRepository.findById(id).get();
     }
 
-    // User id is not passed as both entities are already related.
+    // User id is not passed as both entities are already related. Also, for admin.
     @Override
     public CreditScore updateCreditScore (Long id, CreditScore creditScore) throws EntityNotFoundException{
         if(!creditScoreRepository.existsById(id)){
             throw new EntityNotFoundException(CreditScore.class.getName(), id);
         }
         CreditScore updatedCreditScore = creditScoreRepository.findById(id).get();
-        updatedCreditScore.setCreditScoreValue(generateCreditScoreValue());
+        updatedCreditScore.setCreditScoreValue(creditScore.getCreditScoreValue());
         return creditScoreRepository.save(updatedCreditScore);
     }
 
@@ -66,7 +73,10 @@ public class CreditScoreServiceImpl implements CreditScoreService{
         if(!creditScoreRepository.existsById(id)){
             throw new EntityNotFoundException(CreditScore.class.getName(), id);
         }
-        creditScoreRepository.deleteById(id);
+        CreditScore creditScore = creditScoreRepository.findById(id).get();
+        creditScoreRepository.delete(creditScore);
+        //creditScoreRepository.deleteById(id);
+        System.out.println(creditScoreRepository.findById(id));
     }
 
     // Generates a random credit score between 250 and 1300.

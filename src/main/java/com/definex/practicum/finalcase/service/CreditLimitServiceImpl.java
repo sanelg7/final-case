@@ -74,7 +74,7 @@ public class CreditLimitServiceImpl implements CreditLimitService{
 
         // Admin can assign limit REGARDLESS of the credit score.
         creditLimit.setUser(user);
-
+        user.setCreditLimit(creditLimit);
         // This save operation will override if the user has an existing CreditLimit automatically.
         return creditLimitRepository.save(creditLimit);
     }

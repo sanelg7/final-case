@@ -19,6 +19,7 @@ public class CreditLimitApplicationController {
         this.creditLimitApplicationService = creditLimitApplicationService;
     }
 
+    // TODO: Might delete RequestParam
     @PostMapping
     public CustomResponseEntity<CreditLimitApplication> applyForCreditLimit(
             @RequestParam("tckn") String tckn, @RequestBody CreditLimitApplication creditLimitApplication){
