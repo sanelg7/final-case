@@ -3,6 +3,7 @@ package com.definex.practicum.finalcase.service;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.User;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,8 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
         User user = userRepository.findByTckn(userTckn).get();
         // TODO: Might need to check this
         if(!creditScoreService.existsByUser_Tckn(userTckn)){
-            creditScoreService.createCreditScore(user.getId());
+            user.setCreditScore(creditScoreService.createCreditScore(user.getId()));
+
         }
         creditLimitApplication.setUser(user);
 
@@ -49,6 +51,7 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
         if(creditLimitApplication.getApproved()){
             // Generating a CreditLimit with the help of CreditLimitService
             creditLimitService.createCreditLimit(userTckn, createdCreditLimitApplication);
+
 
         }else{
             // TODO:Return negative sms.
