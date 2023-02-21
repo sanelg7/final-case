@@ -7,8 +7,10 @@ import com.definex.practicum.finalcase.model.User;
 import com.definex.practicum.finalcase.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService{
 
 
     // TODO: Maybe refactor into creation by signup / admin
+    @Transactional
     @Override
     public User createUser(User user) throws EntityCreationException{
         if(userRepository.existsByTckn(user.getTckn())){
@@ -32,19 +35,22 @@ public class UserServiceImpl implements UserService{
     }
 
     // TODO: admin / user separation
+    @Transactional(readOnly = true)
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
     }
 
-
+    @Transactional(readOnly = true)
     @Override
-    public User getUserById(Long id) throws EntityNotFoundException {
+    public User getUserById(UUID id) throws EntityNotFoundException {
         if(!existsById(id)){
             throw new EntityNotFoundException(User.class.getName(), id);
         }
         return userRepository.findById(id).get();
     }
+
+    @Transactional(readOnly = true)
     @Override
     public User getUserByTckn(String tckn) throws EntityNotFoundException {
         if(userRepository.existsByTckn(tckn)){
@@ -57,8 +63,9 @@ public class UserServiceImpl implements UserService{
     Admin users can have normal accounts. Difference is admins have separate (non tckn) logins.
     So they would need two accounts in that case, hence ROLE can not be changed either.
     */
+    @Transactional
     @Override
-    public User updateUser(Long id, User user) throws EntityNotFoundException, UserUpdateException{
+    public User updateUser(UUID id, User user) throws EntityNotFoundException, UserUpdateException{
         if(!existsById(id)){
             throw new EntityNotFoundException(User.class.getName(), id);
         }
@@ -76,17 +83,18 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    @Transactional
     @Override
-    public void deleteUser(Long id) throws EntityNotFoundException {
+    public void deleteUser(UUID id) throws EntityNotFoundException {
         if(!existsById(id)){
             throw new EntityNotFoundException(User.class.getName(), id);
         }
         userRepository.deleteById(id);
     }
 
-
+    @Transactional(readOnly = true)
     @Override
-    public boolean existsById(Long id){
+    public boolean existsById(UUID id){
         return userRepository.existsById(id);
     }
 

@@ -4,15 +4,17 @@ import com.definex.practicum.finalcase.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class EntityNotFoundException extends RuntimeException{
 
     private String type;
-    private Long id;
+    private UUID id;
 
     private String tckn;
-    public EntityNotFoundException(String type, Long id){
+    public EntityNotFoundException(String type, UUID id){
         super(String.format("Entity with type :" + type + ", id: " + id + " not found"));
         this.id = id;
         this.type = type;

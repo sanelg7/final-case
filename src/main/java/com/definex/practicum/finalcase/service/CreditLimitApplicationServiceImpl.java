@@ -3,13 +3,15 @@ package com.definex.practicum.finalcase.service;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.User;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.definex.practicum.finalcase.model.CreditLimitApplication;
 import com.definex.practicum.finalcase.repository.CreditLimitApplicationRepository;
 import com.definex.practicum.finalcase.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 public class CreditLimitApplicationServiceImpl implements CreditLimitApplicationService{
@@ -30,6 +32,7 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
                 this.creditLimitService = creditLimitService;
     }
 
+    @Transactional
     @Override
     public CreditLimitApplication createCreditLimitApplication(String userTckn, CreditLimitApplication creditLimitApplication) throws EntityNotFoundException{
         if(!userRepository.existsByTckn(userTckn)){
@@ -63,8 +66,9 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
     }
 
     // Sets approval, works like a regular update on db
+    @Transactional
     @Override
-    public CreditLimitApplication approveCreditLimitApplication(Long creditLimitApplicationId ,
+    public CreditLimitApplication approveCreditLimitApplication(UUID creditLimitApplicationId ,
                                                                 CreditScore creditScore) throws EntityNotFoundException{
         if(!creditLimitApplicationRepository.existsById(creditLimitApplicationId)){
             throw new EntityNotFoundException(CreditLimitApplication.class.getName(), creditLimitApplicationId);

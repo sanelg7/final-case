@@ -3,15 +3,17 @@ package com.definex.practicum.finalcase.exception;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class EntityCreationException extends RuntimeException{
 
     private String type;
-    private Long id;
+    private UUID id;
     private String tckn;
 
-    public EntityCreationException(String type, Long id){
+    public EntityCreationException(String type, UUID id){
         super(String.format("Entity with type :" + type + ", id: " + id + " could not be created."));
         this.id = id;
         this.type = type;
