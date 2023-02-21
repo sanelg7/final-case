@@ -9,6 +9,9 @@ import com.definex.practicum.finalcase.repository.CreditLimitRepository;
 import com.definex.practicum.finalcase.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 public class CreditLimitServiceImpl implements CreditLimitService{
@@ -24,9 +27,9 @@ public class CreditLimitServiceImpl implements CreditLimitService{
         this.creditLimitApplicationRepository = creditLimitApplicationRepository;
         this.userRepository = userRepository;
     }
-
+    @Transactional(readOnly = true)
     @Override
-    public CreditLimit getCreditLimit(Long id) throws EntityNotFoundException{
+    public CreditLimit getCreditLimit(UUID id) throws EntityNotFoundException{
         if(!creditLimitRepository.existsById(id)){
             throw new EntityNotFoundException(CreditLimit.class.getName(), id);
         }
@@ -39,6 +42,7 @@ public class CreditLimitServiceImpl implements CreditLimitService{
     Also works for updates when an approved application is made as a user can not
     set their credit limit manually.
     */
+    @Transactional
     @Override
     public CreditLimit createCreditLimit(String userTckn, CreditLimitApplication creditLimitApplication) throws EntityNotFoundException{
         if(!userRepository.existsByTckn(userTckn)){
@@ -64,8 +68,9 @@ public class CreditLimitServiceImpl implements CreditLimitService{
     Overloaded creation for ADMIN user role. Admins can create/update a CreditLimit for
     NORMAL users with user id and CreditLimit object containing the amount of credit.
     */
+    @Transactional
     @Override
-    public CreditLimit createCreditLimit(Long userId, CreditLimit creditLimit) throws EntityNotFoundException {
+    public CreditLimit createCreditLimit(UUID userId, CreditLimit creditLimit) throws EntityNotFoundException {
         if(!userRepository.existsById(userId)){
             throw new EntityNotFoundException(User.class.getName(), userId);
         }
@@ -79,8 +84,9 @@ public class CreditLimitServiceImpl implements CreditLimitService{
         return creditLimitRepository.save(creditLimit);
     }
 
+    @Transactional
     @Override
-    public void deleteCreditLimit(Long id) throws EntityNotFoundException{
+    public void deleteCreditLimit(UUID id) throws EntityNotFoundException{
         if(!creditLimitRepository.existsById(id)){
             throw new EntityNotFoundException(CreditLimit.class.getName(), id);
         }

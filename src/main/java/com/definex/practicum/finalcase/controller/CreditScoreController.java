@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/credit-scores")
 public class CreditScoreController {
@@ -21,7 +23,7 @@ public class CreditScoreController {
     }
 
     @GetMapping
-    public CustomResponseEntity<CreditScore> getCreditScore(@RequestParam("id") Long id){
+    public CustomResponseEntity<CreditScore> getCreditScore(@RequestParam("id") UUID id){
         try{
             return new CustomResponseEntity<>(creditScoreService.getCreditScore(id),
                     "Fetched credit score",HttpStatus.OK);
@@ -37,7 +39,7 @@ public class CreditScoreController {
     It could've been done with RequestParam/PathVariable
     */
     @PostMapping
-    public CustomResponseEntity<CreditScore> createCreditScore(@RequestBody Long userId){
+    public CustomResponseEntity<CreditScore> createCreditScore(@RequestBody UUID userId){
         try{
             return new CustomResponseEntity<>(creditScoreService.createCreditScore(userId),
                     "Credit score created successfully", HttpStatus.CREATED);
@@ -48,7 +50,7 @@ public class CreditScoreController {
 
     // TODO: Should be refactored for admin to use
     @PutMapping
-    public CustomResponseEntity<CreditScore> updateCreditScore(@RequestParam("id") Long id, @RequestBody CreditScore creditScore){
+    public CustomResponseEntity<CreditScore> updateCreditScore(@RequestParam("id") UUID id, @RequestBody CreditScore creditScore){
         try{
             return new CustomResponseEntity<>(creditScoreService.updateCreditScore(id,creditScore),
                     "Credit score updated successfully",HttpStatus.OK);
@@ -59,7 +61,7 @@ public class CreditScoreController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteCreditScore(@RequestParam("id") Long id){
+    public ResponseEntity<String> deleteCreditScore(@RequestParam("id") UUID id){
         try {
             creditScoreService.deleteCreditScore(id);
             return new ResponseEntity<>("Credit score deleted successfully", HttpStatus.OK);

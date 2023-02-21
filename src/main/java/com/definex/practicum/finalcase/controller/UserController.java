@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -23,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping
-    public CustomResponseEntity<User> getUser(@RequestParam("id") Long id){
+    public CustomResponseEntity<User> getUser(@RequestParam("id") UUID id){
         try {
             return new CustomResponseEntity<>(userService.getUserById(id),
                     "Fetched user", HttpStatus.OK);
@@ -51,7 +53,7 @@ public class UserController {
 
     // TODO: Maybe add "role" to the not changed list according to where the method was called from.
     @PutMapping
-    public CustomResponseEntity<User> update(@RequestParam("id") Long id,@RequestBody User user){
+    public CustomResponseEntity<User> update(@RequestParam("id") UUID id,@RequestBody User user){
         try {
             return new CustomResponseEntity<>(userService.updateUser(id, user), "User updated successfully", HttpStatus.OK);
         } catch (UserUpdateException | EntityNotFoundException e) {
@@ -66,7 +68,7 @@ public class UserController {
 
 
     @DeleteMapping
-    public ResponseEntity<String> delete(@RequestParam("id") Long id){
+    public ResponseEntity<String> delete(@RequestParam("id") UUID id){
         try {
             userService.deleteUser(id);
             return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
