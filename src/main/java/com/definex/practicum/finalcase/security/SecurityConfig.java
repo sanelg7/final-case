@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .anyRequest().authenticated()
+
                 .and()
                 .httpBasic();
 
