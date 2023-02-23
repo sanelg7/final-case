@@ -8,14 +8,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByTckn(String tckn);
+public interface UserRepository extends JpaRepository<User, UUID> {
 
+    Optional<User> findByTckn(String tckn);
     boolean existsByTckn(String tckn);
 
-    boolean existsById(UUID userId);
-
-    Optional<User> findById(UUID userId);
-
-    void deleteById(UUID id);
+    boolean existsByGsmNumber(String gsmNumber);
 }

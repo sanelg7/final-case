@@ -8,21 +8,18 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.UUID;
-
 
 @Entity
 @Table(name = "credit_applications")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = {})
+@ToString(exclude = {"user"})
 public class CreditLimitApplication {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

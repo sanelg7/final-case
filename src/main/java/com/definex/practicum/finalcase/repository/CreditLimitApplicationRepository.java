@@ -10,7 +10,4 @@ public interface CreditLimitApplicationRepository extends JpaRepository<CreditLi
 
     boolean existsByUser_Tckn(String userTckn);
 
-    boolean existsById(UUID creditLimitApplicationId);
-
-    Optional<CreditLimitApplication> findById(UUID creditLimitApplicationId);
 }

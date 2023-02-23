@@ -1,10 +1,12 @@
-package com.definex.practicum.finalcase.service;
+package com.definex.practicum.finalcase.service.impl;
 
+import com.definex.practicum.finalcase.dto.CreditScoreDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.User;
 import com.definex.practicum.finalcase.repository.CreditScoreRepository;
 import com.definex.practicum.finalcase.repository.UserRepository;
+import com.definex.practicum.finalcase.service.CreditScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +15,7 @@ import java.util.Random;
 import java.util.UUID;
 
 @Service
-public class CreditScoreServiceImpl implements CreditScoreService{
+public class CreditScoreServiceImpl implements CreditScoreService {
 
     private final CreditScoreRepository creditScoreRepository;
     private final UserRepository userRepository;
@@ -33,11 +35,6 @@ public class CreditScoreServiceImpl implements CreditScoreService{
         if(!userRepository.existsById(userId)){
             throw new EntityNotFoundException(User.class.getName(), userId);
         }
-        /*User user = userRepository.findById(userId).get();
-        if (user.getCreditScore() != null){
-            user.setCreditScore(null);
-            userRepository.save(user);
-        }*/
         CreditScore creditScore = new CreditScore();
         creditScore.setCreditScoreValue(generateCreditScoreValue());
         User user = userRepository.findById(userId).get();
@@ -49,7 +46,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 
     @Transactional(readOnly = true)
     @Override
-    public CreditScore getCreditScore(UUID id) throws EntityNotFoundException{
+    public CreditScore getCreditScore(Long id) throws EntityNotFoundException{
         if(!creditScoreRepository.existsById(id)){
             throw new EntityNotFoundException(CreditScore.class.getName(), id);
         }
@@ -59,19 +56,20 @@ public class CreditScoreServiceImpl implements CreditScoreService{
     // User id is not passed as both entities are already related. Also, for admin.
     @Transactional
     @Override
-    public CreditScore updateCreditScore (UUID id, CreditScore creditScore) throws EntityNotFoundException{
+    public CreditScore updateCreditScore (CreditScoreDto creditScoreDto) throws EntityNotFoundException{
+        Long id = creditScoreDto.getId();
         if(!creditScoreRepository.existsById(id)){
             throw new EntityNotFoundException(CreditScore.class.getName(), id);
         }
         CreditScore updatedCreditScore = creditScoreRepository.findById(id).get();
-        updatedCreditScore.setCreditScoreValue(creditScore.getCreditScoreValue());
+        updatedCreditScore.setCreditScoreValue(creditScoreDto.getCreditScoreValue());
         return creditScoreRepository.save(updatedCreditScore);
     }
 
 
     @Transactional
     @Override
-    public void deleteCreditScore(UUID id) throws EntityNotFoundException{
+    public void deleteCreditScore(Long id) throws EntityNotFoundException{
         if(!creditScoreRepository.existsById(id)){
             throw new EntityNotFoundException(CreditScore.class.getName(), id);
         }
