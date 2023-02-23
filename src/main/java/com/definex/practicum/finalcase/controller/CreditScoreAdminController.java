@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/credit-scores/admin")
 public class CreditScoreAdminController extends BaseCreditScoreController{
 
     @Autowired

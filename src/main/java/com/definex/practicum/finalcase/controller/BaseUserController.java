@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController
 @RequestMapping("/users")
 public class BaseUserController {
 
@@ -33,8 +32,8 @@ public class BaseUserController {
     }
 
 
-    @DeleteMapping
-    public ResponseEntity<String> delete(@RequestParam("id") UUID id){
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> delete(@PathVariable UUID id){
         try {
             userService.deleteUser(id);
             return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
