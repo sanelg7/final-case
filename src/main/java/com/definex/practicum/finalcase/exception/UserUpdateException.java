@@ -9,16 +9,8 @@ import lombok.Setter;
 @Setter
 public class UserUpdateException extends RuntimeException{
 
-    String tckn;
-    Date dateOfBirth;
-    String gsmNumber;
-
-    public UserUpdateException(String tckn, Date dateOfBirth, String gsmNumber) {
-        super(String.format("tckn, dateOfBirth and gsmNumber can not be changed."
-        + "Passed in: tckn=" + tckn + " , gsmNumber=" + gsmNumber + " , dateOfBirth=" + dateOfBirth));
-        this.tckn=tckn;
-        this.dateOfBirth=dateOfBirth;
-        this.gsmNumber=gsmNumber;
+    public UserUpdateException() {
+        super(String.format("Nothing found to update."));
     }
 
 }

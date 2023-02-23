@@ -12,7 +12,4 @@ public interface CreditScoreRepository extends JpaRepository<CreditScore, Long> 
 
     boolean existsByUser_Tckn(String userTckn);
 
-    boolean existsById(UUID id);
-
-    Optional<CreditScore> findById(UUID id);
 }

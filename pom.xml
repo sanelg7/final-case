@@ -48,18 +48,25 @@
 		</dependency>
 
 		<!-- C3PO -->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>0.9.5.2</version>
-		</dependency>
+		</dependency>-->
 
-		<!--
+
+		<!-- Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
+		</dependency>
 
+		<!-- JWT -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
 
 	</dependencies>
 

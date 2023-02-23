@@ -26,5 +26,7 @@ public class EntityCreationException extends RuntimeException{
         this.type = type;
     }
 
+    // TODO: add one for gsm
+
 
 }

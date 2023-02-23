@@ -6,18 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-@Entity
-@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = {})
-public class User{
+@ToString
+@Entity
+@Table(name = "users")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -33,15 +33,21 @@ public class User{
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "gsm_number", length = 10)
     private String gsmNumber;
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private CreditLimit creditLimit;
@@ -53,13 +59,48 @@ public class User{
     private List<CreditLimitApplication> creditApplications;
 
 
-    public User(String tckn, String firstName, String lastName, String gsmNumber, Date dateOfBirth, Role role) {
+    public User(String tckn, String firstName, String lastName, String gsmNumber, Date dateOfBirth) {
         this.tckn = tckn;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gsmNumber = gsmNumber;
         this.dateOfBirth = dateOfBirth;
-        this.role = role;
     }
 
+    public User(String tckn, String password, List<Role> roles) {
+        this.tckn = tckn;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getAuthorities();
+    }
+
+    @Override
+    public String getUsername() {
+        return getTckn();
+    }
+
+    // These are not handled. All return hardcoded values.
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

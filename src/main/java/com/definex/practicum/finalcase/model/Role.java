@@ -1,8 +1,18 @@
 package com.definex.practicum.finalcase.model;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-public enum Role {
+@Setter
+@Getter
+@Entity
+@Table(name = "roles")
+public class Role {
 
-    ADMIN,
-    USER
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String roleName;
 }

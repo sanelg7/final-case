@@ -1,8 +1,12 @@
-package com.definex.practicum.finalcase.service;
+package com.definex.practicum.finalcase.service.impl;
 
+import com.definex.practicum.finalcase.dto.CreditLimitApplicationDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.User;
+import com.definex.practicum.finalcase.service.CreditLimitApplicationService;
+import com.definex.practicum.finalcase.service.CreditLimitService;
+import com.definex.practicum.finalcase.service.CreditScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Service
-public class CreditLimitApplicationServiceImpl implements CreditLimitApplicationService{
+@Transactional
+public class CreditLimitApplicationServiceImpl implements CreditLimitApplicationService {
 
     private final UserRepository userRepository;
     private final CreditLimitApplicationRepository creditLimitApplicationRepository;
@@ -32,9 +37,9 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
                 this.creditLimitService = creditLimitService;
     }
 
-    @Transactional
     @Override
-    public CreditLimitApplication createCreditLimitApplication(String userTckn, CreditLimitApplication creditLimitApplication) throws EntityNotFoundException{
+    public CreditLimitApplication createCreditLimitApplication(CreditLimitApplicationDto creditLimitApplicationDto) throws EntityNotFoundException{
+        String userTckn = creditLimitApplicationDto.getTckn();
         if(!userRepository.existsByTckn(userTckn)){
             throw new EntityNotFoundException(User.class.getName(), userTckn);
         }
@@ -44,17 +49,18 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
             user.setCreditScore(creditScoreService.createCreditScore(user.getId()));
 
         }
+        CreditLimitApplication creditLimitApplication = new CreditLimitApplication();
         creditLimitApplication.setUser(user);
-
+        creditLimitApplication.setGuarantee(creditLimitApplicationDto.getGuarantee());
+        creditLimitApplication.setMonthlyIncome(creditLimitApplicationDto.getMonthlyIncome());
         // Saving te application itself
-        CreditLimitApplication createdCreditLimitApplication = creditLimitApplicationRepository.save(creditLimitApplication);
+        creditLimitApplicationRepository.save(creditLimitApplication);
         // Set approval
-        createdCreditLimitApplication = approveCreditLimitApplication(createdCreditLimitApplication.getId(), user.getCreditScore());
+        creditLimitApplication = approveCreditLimitApplication(creditLimitApplication.getId(), user.getCreditScore());
 
         if(creditLimitApplication.getApproved()){
             // Generating a CreditLimit with the help of CreditLimitService
-            creditLimitService.createCreditLimit(userTckn, createdCreditLimitApplication);
-
+            creditLimitService.createCreditLimit(userTckn, creditLimitApplication);
 
         }else{
             // TODO:Return negative sms.
@@ -66,9 +72,8 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
     }
 
     // Sets approval, works like a regular update on db
-    @Transactional
     @Override
-    public CreditLimitApplication approveCreditLimitApplication(UUID creditLimitApplicationId ,
+    public CreditLimitApplication approveCreditLimitApplication(Long creditLimitApplicationId ,
                                                                 CreditScore creditScore) throws EntityNotFoundException{
         if(!creditLimitApplicationRepository.existsById(creditLimitApplicationId)){
             throw new EntityNotFoundException(CreditLimitApplication.class.getName(), creditLimitApplicationId);
@@ -84,7 +89,5 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
     }
 
 
-
-    // TODO: Check if approved. For users to check their application.
 
 }
