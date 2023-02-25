@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.CreditScoreDto;
+import com.definex.practicum.finalcase.dto.admin.AdminCreditScoreDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/credit-scores/admin")
-public class CreditScoreAdminController extends BaseCreditScoreController{
+public class CreditScoreAdminController extends BaseCreditScoreController {
 
     @Autowired
     public CreditScoreAdminController(CreditScoreService creditScoreService) {
@@ -21,7 +21,7 @@ public class CreditScoreAdminController extends BaseCreditScoreController{
 
     // Only admin can update the credit score by passing a value manually.
     @PutMapping
-    public CustomResponseEntity<CreditScore> updateCreditScore(@RequestBody CreditScoreDto creditScoreDto){
+    public CustomResponseEntity<CreditScore> updateCreditScore(@RequestBody AdminCreditScoreDto creditScoreDto){
         try{
             return new CustomResponseEntity<>(creditScoreService.updateCreditScore(creditScoreDto),
                     "Credit score updated successfully", HttpStatus.OK);

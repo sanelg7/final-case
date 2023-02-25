@@ -1,6 +1,7 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.CreateUserRequestDto;
+import com.definex.practicum.finalcase.controller.BaseUserController;
+import com.definex.practicum.finalcase.dto.admin.AdminCreateUserRequestDto;
 import com.definex.practicum.finalcase.exception.EntityCreationException;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users/admin")
-public class UserAdminController extends BaseUserController{
+public class UserAdminController extends BaseUserController {
 
 
     @Autowired
@@ -25,9 +26,9 @@ public class UserAdminController extends BaseUserController{
 
 
     @PostMapping
-    public CustomResponseEntity<User> createUser(@RequestBody CreateUserRequestDto createUserRequestDto){
+    public CustomResponseEntity<User> createUser(@RequestBody AdminCreateUserRequestDto adminCreateUserRequestDto){
         try {
-            return new CustomResponseEntity<>(userService.createUser(createUserRequestDto), "User created successfully", HttpStatus.CREATED);
+            return new CustomResponseEntity<>(userService.createUser(adminCreateUserRequestDto), "User created successfully", HttpStatus.CREATED);
         } catch (EntityCreationException e) {
             //TODO: Check http status
             return new CustomResponseEntity<>(null,e.getMessage(), HttpStatus.BAD_REQUEST);

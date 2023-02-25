@@ -1,6 +1,7 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.UpdateUserDto;
+import com.definex.practicum.finalcase.aop.annotations.RequiresUserRolePermission;
+import com.definex.practicum.finalcase.dto.user.UserUpdatePasswordDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-public class UserController extends BaseUserController{
+public class UserController extends BaseUserController {
 
 
     @Autowired
@@ -24,9 +25,10 @@ public class UserController extends BaseUserController{
 
     // Restricted update
     @PutMapping("{id}")
-    public CustomResponseEntity<User> update(@PathVariable UUID id, @RequestBody UpdateUserDto updateUserDto){
+    @RequiresUserRolePermission
+    public CustomResponseEntity<User> update(@PathVariable UUID id, @RequestBody UserUpdatePasswordDto updateUserDto){
         try {
-            return new CustomResponseEntity<>(userService.updateUser(id, updateUserDto), "User updated successfully", HttpStatus.OK);
+            return new CustomResponseEntity<>(userService.updateUserPassword(id, updateUserDto), "User updated successfully", HttpStatus.OK);
         } catch (EntityNotFoundException | UserUpdateException e) {
             if(e instanceof EntityNotFoundException){
                 return new CustomResponseEntity<>(null,"No user found to update" , HttpStatus.BAD_REQUEST);
