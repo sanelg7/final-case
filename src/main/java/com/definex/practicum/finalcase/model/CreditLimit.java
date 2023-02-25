@@ -23,7 +23,7 @@ public class CreditLimit {
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_tckn")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public CreditLimit(Double amount, User user) {

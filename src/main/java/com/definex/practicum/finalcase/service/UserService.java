@@ -1,13 +1,12 @@
 package com.definex.practicum.finalcase.service;
 
 
-import com.definex.practicum.finalcase.dto.CreateUserRequestDto;
+import com.definex.practicum.finalcase.dto.AdminCreateUpdateUserRequestDto;
 import com.definex.practicum.finalcase.dto.RegisterDto;
-import com.definex.practicum.finalcase.dto.UpdateUserDto;
+import com.definex.practicum.finalcase.dto.UserUpdatePasswordDto;
 import com.definex.practicum.finalcase.exception.EntityCreationException;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;
-import com.definex.practicum.finalcase.model.Role;
 import com.definex.practicum.finalcase.model.User;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,19 +17,14 @@ public interface UserService {
 
     User getUserByTckn(String tckn);
 
-
-
-
-
-    User register(RegisterDto registerDto) throws EntityCreationException;
-
-    User createUser(CreateUserRequestDto createUserRequestDto);
+    User register(RegisterDto registerDto);
+    User createUser(AdminCreateUpdateUserRequestDto adminCreateUpdateUserRequestDto);
 
     List<User> getUsers();
 
-    User updateUser(UUID id, UpdateUserDto updateUserDto);
+    User updateUserPassword(UUID id, UserUpdatePasswordDto updateUserDto);
 
-    User updateUserByAdmin(UUID id, User user);
+    User updateUserByAdmin(UUID id, AdminCreateUpdateUserRequestDto adminCreateUpdateUserRequestDto);
 
     void deleteUser(UUID id);
     User getUserById(UUID id);

@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserRequestDto {
+public class AdminCreateUpdateUserRequestDto {
 
         private RegisterDto registerDto;
         private List<Role> roles;

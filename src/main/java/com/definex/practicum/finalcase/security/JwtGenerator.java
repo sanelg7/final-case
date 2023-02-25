@@ -8,22 +8,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtGenerator {
     String jwtSecret = "secret";
 
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication, UUID userId){
         String username = authentication.getName();
         Date current = new Date();
 
         // TODO: Move these to application.properties.expiration overhead and secret.
-        Date expiration = new Date(current.getTime() + 70000);
+        Date expiration = new Date(current.getTime() + 3600000);
         String jwt = Jwts.builder()
                 .setSubject(username)
+                .claim("userId", userId.toString())
                 .setIssuedAt(current)
                 .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS256, jwtSecret)
+                .signWith(SignatureAlgorithm.HS256, "secret")
                 .compact();
         return jwt;
     }
@@ -37,10 +39,17 @@ public class JwtGenerator {
     }
 
     public boolean validation(String token){
+        System.out.println(token);
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            /*Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+            Date expiration = claims.getExpiration();
+            if (expiration.before(new Date())) {
+                throw new AuthenticationCredentialsNotFoundException("Expired JWT");
+            }*/
             return true;
         }catch (Exception e) {
+            // TODO: Write this error somehow?
             throw new AuthenticationCredentialsNotFoundException("Invalid JWT");
         }
     }
