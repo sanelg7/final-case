@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.CreditLimitApplicationDto;
+import com.definex.practicum.finalcase.dto.common.CreditLimitApplicationDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimitApplication;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
@@ -32,4 +32,6 @@ public class CreditLimitApplicationController {
             }
 
     }
+
+    // TODO: Check status. Uses tckn.
 }

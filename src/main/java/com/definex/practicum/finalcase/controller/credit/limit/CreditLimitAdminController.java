@@ -1,6 +1,7 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.AdminCreditLimitDto;
+import com.definex.practicum.finalcase.controller.BaseCreditLimitController;
+import com.definex.practicum.finalcase.dto.admin.AdminCreditLimitDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/credit-limits/admin")
-public class CreditLimitAdminController extends BaseCreditLimitController{
+public class CreditLimitAdminController extends BaseCreditLimitController {
 
     @Autowired
     public CreditLimitAdminController(CreditLimitService creditLimitService) {

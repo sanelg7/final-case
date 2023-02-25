@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.UserCreditLimitDto;
+import com.definex.practicum.finalcase.dto.user.UserCreditLimitDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
