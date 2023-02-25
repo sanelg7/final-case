@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.admin.AdminCreditScoreDto;
+import com.definex.practicum.finalcase.dto.CreditScoreDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@RestController
 @RequestMapping("/credit-scores")
 public class BaseCreditScoreController {
 
+    // Controller both for USER and ADMIN roles
 
-    protected final CreditScoreService creditScoreService;
+    CreditScoreService creditScoreService;
 
     @Autowired
     public BaseCreditScoreController(CreditScoreService creditScoreService) {
@@ -23,7 +25,7 @@ public class BaseCreditScoreController {
     }
 
     @GetMapping
-    public CustomResponseEntity<CreditScore> getCreditScore(@RequestBody AdminCreditScoreDto creditScoreDto){
+    public CustomResponseEntity<CreditScore> getCreditScore(@RequestBody CreditScoreDto creditScoreDto){
         try{
             return new CustomResponseEntity<>(creditScoreService.getCreditScore(creditScoreDto.getId()),
                     "Fetched credit score", HttpStatus.OK);
