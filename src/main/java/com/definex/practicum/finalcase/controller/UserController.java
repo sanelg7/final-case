@@ -3,6 +3,7 @@ package com.definex.practicum.finalcase.controller;
 import com.definex.practicum.finalcase.aop.annotations.RequiresUserRolePermission;
 import com.definex.practicum.finalcase.dto.UserUpdatePasswordDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
+import com.definex.practicum.finalcase.exception.UnauthorizedException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
 import com.definex.practicum.finalcase.model.User;
@@ -26,15 +27,16 @@ public class UserController extends BaseUserController {
     // Restricted update
     @PutMapping("{id}")
     @RequiresUserRolePermission
-    public CustomResponseEntity<User> update(@PathVariable UUID id, @RequestBody UserUpdatePasswordDto updateUserDto){
+    public CustomResponseEntity<User> update(@PathVariable UUID id, @RequestBody UserUpdatePasswordDto updateUserDto) {
         try {
             return new CustomResponseEntity<>(userService.updateUserPassword(id, updateUserDto), "User updated successfully", HttpStatus.OK);
-        } catch (EntityNotFoundException | UserUpdateException e) {
+        } catch (EntityNotFoundException | UserUpdateException | UnauthorizedException e) {
             if(e instanceof EntityNotFoundException){
                 return new CustomResponseEntity<>(null,"No user found to update" , HttpStatus.BAD_REQUEST);
-            }else {
+            }else if (e instanceof UserUpdateException){
                 return new CustomResponseEntity<>(null,e.getMessage(), HttpStatus.BAD_REQUEST);
-
+            } else {
+                return new CustomResponseEntity<>(null,e.getMessage(), HttpStatus.BAD_REQUEST);
             }
         }
     }

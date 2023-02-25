@@ -42,8 +42,11 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/credit-limit-applications/**").permitAll()
                 .requestMatchers("/users/admin/**").hasRole("ADMIN")
+                .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/credit-scores/admin/**").hasRole("ADMIN")
+                .requestMatchers("/credit-scores/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
