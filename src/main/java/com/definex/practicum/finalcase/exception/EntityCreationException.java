@@ -11,7 +11,9 @@ public class EntityCreationException extends RuntimeException{
 
     private String type;
     private UUID id;
-    private String tckn;
+    private Long longId;
+    // strVariable is mostly used for unique String identifiers. Such as user tckn.
+    private String strVariable;
 
     public EntityCreationException(String type, UUID id){
         super(String.format("Entity with type :" + type + ", id: " + id + " could not be created."));
@@ -19,14 +21,14 @@ public class EntityCreationException extends RuntimeException{
         this.type = type;
     }
 
-    // TODO: this does not work
-    public EntityCreationException(String type, String tckn){
-        super(String.format("User with tckn :" + tckn  + " already exists."));
-        this.tckn = tckn;
+
+    public EntityCreationException(String type, String strVariable){
+        super(String.format("Record with unique field: " + strVariable + " already exists."));
+        this.strVariable = strVariable;
         this.type = type;
     }
 
-    // TODO: add one for gsm
+
 
 
 }

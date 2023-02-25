@@ -65,9 +65,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByGsmNumber(registerDto.getGsmNumber())){
             throw new EntityCreationException(User.class.getName(), registerDto.getGsmNumber());
         }
+        List<String> roleNames = adminCreateUpdateUserRequestDto.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList());
+        List<Role> createdUserRoles = roleRepository.findByRoleNameIn(roleNames);
+
         User user = adminCreateUpdateUserRequestDto.buildUserWithoutPasswordAndRoles();
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setRoles(adminCreateUpdateUserRequestDto.getRoles());
+        user.setRoles(createdUserRoles);
         return userRepository.save(user);
     }
 
@@ -121,7 +124,10 @@ public class UserServiceImpl implements UserService {
         User updatedUser = userRepository.findById(id).get();
 
         // Checking if another user has the tckn or gsm number passed.
-        if(userRepository.existsByTckn(adminCreateUpdateUserRequestDto.getRegisterDto().getTckn())){
+        if(userRepository.existsByTckn(adminCreateUpdateUserRequestDto.getRegisterDto().getTckn()) ||
+                userRepository.existsByGsmNumber(adminCreateUpdateUserRequestDto.getRegisterDto().getGsmNumber())){
+
+            // If there is such a user, check if it is another or the same. Same user can have their tckn or gsm number updated.
             User receivedUser = userRepository.findByTckn(adminCreateUpdateUserRequestDto.getRegisterDto().getTckn()).get();
            if(updatedUser.getId() == receivedUser.getId()){
                throw new UserUpdateException(receivedUser.getTckn(), receivedUser.getGsmNumber());

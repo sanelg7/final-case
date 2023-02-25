@@ -1,5 +1,6 @@
 package com.definex.practicum.finalcase.controller;
 
+import com.definex.practicum.finalcase.aop.annotations.RequiresUserRolePermission;
 import com.definex.practicum.finalcase.dto.AdminCreditScoreDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
@@ -22,8 +23,9 @@ public class BaseCreditScoreController {
         this.creditScoreService = creditScoreService;
     }
 
-    @GetMapping
-    public CustomResponseEntity<CreditScore> getCreditScore(@RequestBody AdminCreditScoreDto creditScoreDto){
+    @GetMapping("{userId}")
+    @RequiresUserRolePermission
+    public CustomResponseEntity<CreditScore> getCreditScore(@PathVariable UUID userId, @RequestBody AdminCreditScoreDto creditScoreDto){
         try{
             return new CustomResponseEntity<>(creditScoreService.getCreditScore(creditScoreDto.getId()),
                     "Fetched credit score", HttpStatus.OK);
@@ -34,6 +36,7 @@ public class BaseCreditScoreController {
 
     // In the context of this assignment, credit score is a randomly created value. So only the user id is enough to create and bind to a user. Also, acts as an update.
     @PostMapping("{userId}")
+    @RequiresUserRolePermission
     public CustomResponseEntity<CreditScore> generateCreditScore(@PathVariable UUID userId){
         try{
             return new CustomResponseEntity<>(creditScoreService.createCreditScore(userId),

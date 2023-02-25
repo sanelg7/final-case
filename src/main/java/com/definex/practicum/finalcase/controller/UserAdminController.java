@@ -25,11 +25,11 @@ public class UserAdminController extends BaseUserController {
 
 
     @PostMapping
+
     public CustomResponseEntity<User> createUser(@RequestBody AdminCreateUpdateUserRequestDto adminCreateUpdateUserRequestDto){
         try {
             return new CustomResponseEntity<>(userService.createUser(adminCreateUpdateUserRequestDto), "User created successfully", HttpStatus.CREATED);
         } catch (EntityCreationException e) {
-            //TODO: Check http status
             return new CustomResponseEntity<>(null,e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
