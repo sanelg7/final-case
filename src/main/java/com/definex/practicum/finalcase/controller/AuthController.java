@@ -1,8 +1,8 @@
-package com.definex.practicum.finalcase.controller.insecure;
+package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.common.LoginResponseDto;
-import com.definex.practicum.finalcase.dto.common.LoginDto;
-import com.definex.practicum.finalcase.dto.common.RegisterDto;
+import com.definex.practicum.finalcase.dto.AuthResponseDto;
+import com.definex.practicum.finalcase.dto.LoginDto;
+import com.definex.practicum.finalcase.dto.RegisterDto;
 import com.definex.practicum.finalcase.exception.EntityCreationException;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
 import com.definex.practicum.finalcase.model.User;
@@ -38,27 +38,19 @@ public class AuthController {
     @PostMapping("register")
     public CustomResponseEntity<User> register(@RequestBody RegisterDto registerDto) {
         try{
-            User user = userService.register(registerDto);
-            return new CustomResponseEntity<>(user, "Registered successfully", HttpStatus.CREATED);
+            return new CustomResponseEntity<>(userService.register(registerDto), "Registered successfully", HttpStatus.CREATED);
         }catch (EntityCreationException e){
             return new CustomResponseEntity<>(null,e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getTckn(),
                         loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        User user = userService.getUserByTckn(loginDto.getTckn());
-        String token = jwtGenerator.generateToken(authentication,user.getId());
-        // Used for debugging with user ID. Converts user id on db to UUID format.
-
-
-        return new ResponseEntity<>(new LoginResponseDto(token, user.getId()), HttpStatus.OK);
-
+        String token = jwtGenerator.generateToken(authentication);
+        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
     }
-
-    // TODO: Logout
 }

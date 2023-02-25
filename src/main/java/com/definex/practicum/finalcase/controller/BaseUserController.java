@@ -1,6 +1,5 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.aop.annotations.RequiresUserRolePermission;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
 import com.definex.practicum.finalcase.model.User;
@@ -23,7 +22,6 @@ public class BaseUserController {
     }
 
     @GetMapping("{id}")
-    @RequiresUserRolePermission
     public CustomResponseEntity<User> getUser(@PathVariable UUID id){
         try {
             return new CustomResponseEntity<>(userService.getUserById(id),
@@ -35,7 +33,6 @@ public class BaseUserController {
 
 
     @DeleteMapping("{id}")
-    @RequiresUserRolePermission
     public ResponseEntity<String> delete(@PathVariable UUID id){
         try {
             userService.deleteUser(id);
