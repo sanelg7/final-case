@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreditScoreDto {
+public class AdminCreditScoreDto {
 
     @NotBlank
     private Long id;

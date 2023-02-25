@@ -10,7 +10,9 @@ import lombok.Setter;
 public class UserUpdateException extends RuntimeException{
 
     public UserUpdateException() {
-        super(String.format("Nothing found to update."));
+        super(String.format("No data found to update with."));
     }
-
+    public UserUpdateException(String tckn, String gsmNumber) {
+        super(String.format("TCKN: " + tckn + " OR Gsm number: " + gsmNumber + " taken!"));
+    }
 }

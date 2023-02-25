@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/credit-limits/admin")
-public class CreditLimitAdminController extends BaseCreditLimitController{
+public class CreditLimitAdminController extends BaseCreditLimitController {
 
     @Autowired
     public CreditLimitAdminController(CreditLimitService creditLimitService) {

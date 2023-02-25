@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.service.impl;
 
-import com.definex.practicum.finalcase.dto.CreditScoreDto;
+import com.definex.practicum.finalcase.dto.AdminCreditScoreDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.User;
@@ -56,7 +56,7 @@ public class CreditScoreServiceImpl implements CreditScoreService {
     // User id is not passed as both entities are already related. Also, for admin.
     @Transactional
     @Override
-    public CreditScore updateCreditScore (CreditScoreDto creditScoreDto) throws EntityNotFoundException{
+    public CreditScore updateCreditScore (AdminCreditScoreDto creditScoreDto) throws EntityNotFoundException{
         Long id = creditScoreDto.getId();
         if(!creditScoreRepository.existsById(id)){
             throw new EntityNotFoundException(CreditScore.class.getName(), id);

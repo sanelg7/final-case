@@ -12,18 +12,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.AnyRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private JwtEntryPoint jwtEntryPoint;
-    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtEntryPoint jwtEntryPoint) {
+    public SecurityConfig(JwtEntryPoint jwtEntryPoint) {
         this.jwtEntryPoint = jwtEntryPoint;
-        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
@@ -37,9 +41,13 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/users/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic();
+
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

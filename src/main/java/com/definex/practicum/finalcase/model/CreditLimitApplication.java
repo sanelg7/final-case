@@ -23,7 +23,7 @@ public class CreditLimitApplication {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_tckn")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "approved")

@@ -68,6 +68,13 @@
 			<version>0.9.1</version>
 		</dependency>
 
+		<!-- JWT WebBind -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
 	</dependencies>
 
 

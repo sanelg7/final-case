@@ -15,8 +15,6 @@ import com.definex.practicum.finalcase.repository.CreditLimitApplicationReposito
 import com.definex.practicum.finalcase.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Service
 @Transactional
 public class CreditLimitApplicationServiceImpl implements CreditLimitApplicationService {

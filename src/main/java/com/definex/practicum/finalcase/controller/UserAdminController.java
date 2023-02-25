@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.controller;
 
-import com.definex.practicum.finalcase.dto.CreateUserRequestDto;
+import com.definex.practicum.finalcase.dto.AdminCreateUpdateUserRequestDto;
 import com.definex.practicum.finalcase.exception.EntityCreationException;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users/admin")
-public class UserAdminController extends BaseUserController{
+public class UserAdminController extends BaseUserController {
 
 
     @Autowired
@@ -25,9 +25,9 @@ public class UserAdminController extends BaseUserController{
 
 
     @PostMapping
-    public CustomResponseEntity<User> createUser(@RequestBody CreateUserRequestDto createUserRequestDto){
+    public CustomResponseEntity<User> createUser(@RequestBody AdminCreateUpdateUserRequestDto adminCreateUpdateUserRequestDto){
         try {
-            return new CustomResponseEntity<>(userService.createUser(createUserRequestDto), "User created successfully", HttpStatus.CREATED);
+            return new CustomResponseEntity<>(userService.createUser(adminCreateUpdateUserRequestDto), "User created successfully", HttpStatus.CREATED);
         } catch (EntityCreationException e) {
             //TODO: Check http status
             return new CustomResponseEntity<>(null,e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -42,9 +42,9 @@ public class UserAdminController extends BaseUserController{
 
     // Can update restricted fields and credit related data.
     @PutMapping("{id}")
-    public CustomResponseEntity<User> update(@PathVariable UUID id, @RequestBody User user){
+    public CustomResponseEntity<User> update(@PathVariable UUID id, @RequestBody AdminCreateUpdateUserRequestDto adminCreateUpdateUserRequestDto){
         try {
-            return new CustomResponseEntity<>(userService.updateUserByAdmin(id, user), "User updated successfully", HttpStatus.OK);
+            return new CustomResponseEntity<>(userService.updateUserByAdmin(id, adminCreateUpdateUserRequestDto), "User updated successfully", HttpStatus.OK);
         } catch (EntityNotFoundException e) {
                 return new CustomResponseEntity<>(null,"No user found to update" , HttpStatus.BAD_REQUEST);
 
