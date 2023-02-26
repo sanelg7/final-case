@@ -52,6 +52,7 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
     public CreditLimitApplication createCreditLimitApplication(CreditLimitApplicationDto creditLimitApplicationDto) throws EntityNotFoundException, CreditLimitApplicationException{
         String userTckn = creditLimitApplicationDto.getTckn();
         if(!userRepository.existsByTckn(userTckn)){
+            System.out.println(creditLimitApplicationDto);
             throw new EntityNotFoundException(User.class.getName(), userTckn);
         }
         User user = userRepository.findByTckn(userTckn).get();
@@ -131,7 +132,7 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
 
     @Transactional(readOnly = true)
     @Override
-    public CreditLimit getCreditLimitByTckn(CreditLimitApplicationQueryDto creditLimitApplicationQueryDto) throws EntityNotFoundException{
+    public CreditLimit getCreditLimitApplicationResultByTckn(CreditLimitApplicationQueryDto creditLimitApplicationQueryDto) throws EntityNotFoundException{
         String userTckn = creditLimitApplicationQueryDto.getTckn();
         if(!userRepository.existsByTckn(userTckn)){
             throw new EntityNotFoundException(User.class.getName(), userTckn);

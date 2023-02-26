@@ -124,11 +124,20 @@ public class UserServiceImpl implements UserService {
         User updatedUser = userRepository.findById(id).get();
 
         // Checking if another user has the tckn or gsm number passed.
-        if(userRepository.existsByTckn(adminCreateUpdateUserRequestDto.getRegisterDto().getTckn()) ||
-                userRepository.existsByGsmNumber(adminCreateUpdateUserRequestDto.getRegisterDto().getGsmNumber())){
-
-            // If there is such a user, check if it is another or the same. Same user can have their tckn or gsm number updated.
+        if(userRepository.existsByTckn(adminCreateUpdateUserRequestDto.getRegisterDto().getTckn())){
             User receivedUser = userRepository.findByTckn(adminCreateUpdateUserRequestDto.getRegisterDto().getTckn()).get();
+
+            // If that is the case, These users must be the same. If not an error should be thrown.
+            if (userRepository.existsByGsmNumber(adminCreateUpdateUserRequestDto.getRegisterDto().getGsmNumber())){
+                User receivedUserByGsmNo = userRepository.findByGsmNumber(adminCreateUpdateUserRequestDto.getRegisterDto().getGsmNumber()).get();
+                if (!receivedUser.equals(receivedUserByGsmNo)) {
+                    throw new UserUpdateException(receivedUser.getTckn(), receivedUserByGsmNo.getGsmNumber());
+                }
+
+        }
+
+
+            // Now checking if it is the same user based on id. Same user can have their tckn or gsm number updated.
            if(updatedUser.getId() == receivedUser.getId()){
                throw new UserUpdateException(receivedUser.getTckn(), receivedUser.getGsmNumber());
            }

@@ -44,7 +44,7 @@ public class CreditLimitApplicationController {
             @RequestBody CreditLimitApplicationQueryDto creditLimitApplicationQueryDto){
         try {
             return new CustomResponseEntity<>(
-                    creditLimitApplicationService.getCreditLimitByTckn(creditLimitApplicationQueryDto),
+                    creditLimitApplicationService.getCreditLimitApplicationResultByTckn(creditLimitApplicationQueryDto),
                     "Credit limit returned", HttpStatus.ACCEPTED);
         }catch (EntityNotFoundException e){
                 return new CustomResponseEntity<>(null, "No user found with given tckn", HttpStatus.BAD_REQUEST);
