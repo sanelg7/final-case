@@ -1,5 +1,6 @@
 package com.definex.practicum.finalcase.service.impl;
 
+import com.definex.practicum.finalcase.dto.CreditLimitApplicationQueryDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
 import com.definex.practicum.finalcase.model.CreditLimitApplication;
@@ -71,8 +72,9 @@ public class CreditLimitServiceImpl implements CreditLimitService {
         double income = creditLimitApplication.getMonthlyIncome();
         double guarantee = creditLimitApplication.getGuarantee();
         double creditLimitAmount = generateCreditLimitValue(creditScore, income, guarantee);
-
         CreditLimit creditLimit = new CreditLimit(creditLimitAmount, user);
+        user.setCreditLimit(creditLimit);
+
         return creditLimitRepository.save(creditLimit);
     }
 
