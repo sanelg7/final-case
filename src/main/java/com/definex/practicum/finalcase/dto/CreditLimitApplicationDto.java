@@ -18,8 +18,17 @@ public class CreditLimitApplicationDto {
     @Pattern(regexp = "^[0-9]{11}$", message = "TCKN must be exactly 11 characters long, can only contain numeric values")
     private String tckn;
 
-    @NotNull(message = "Date of birth is required")
-    @Past(message = "Date of birth must be in the past")
+    @NotBlank(message = "First name cannot be empty")
+    private String firstName;
+
+    @NotBlank(message = "Last name cannot be empty")
+    private String lastName;
+
+    @NotBlank(message = "GSM No cannot be empty")
+    @Pattern(regexp = "^[0-9]{10}$", message = "GSMno must be exactly 10 characters long, can only contain numeric values")
+    private String gsmNumber;
+
+    @NotNull(message = "Date of birth cannot be empty")
     private Date dateOfBirth;
 
     @NotNull

@@ -87,6 +87,7 @@ public class User implements UserDetails {
         return authorities;
     }
 
+    // TCKN works as username
     @Override
     public String getUsername() {
         return getTckn();
