@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/credit-scores/admin")
-public class CreditScoreAdminController extends BaseCreditScoreController {
+public class AdminCreditScoreController extends BaseCreditScoreController {
 
     @Autowired
-    public CreditScoreAdminController(CreditScoreService creditScoreService) {
+    public AdminCreditScoreController(CreditScoreService creditScoreService) {
         super(creditScoreService);
     }
 

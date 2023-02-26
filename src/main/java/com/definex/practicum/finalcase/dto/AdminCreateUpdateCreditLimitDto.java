@@ -11,11 +11,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminCreditLimitDto {
-
-    @NotNull
-    @Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
-    private UUID userId;
+public class AdminCreateUpdateCreditLimitDto {
 
     @NonNull
     @Positive

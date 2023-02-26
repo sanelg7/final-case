@@ -1,6 +1,5 @@
 package com.definex.practicum.finalcase.service.impl;
 
-import com.definex.practicum.finalcase.dto.CreditLimitApplicationQueryDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
 import com.definex.practicum.finalcase.model.CreditLimitApplication;
@@ -40,15 +39,11 @@ public class CreditLimitServiceImpl implements CreditLimitService {
 
     @Transactional(readOnly = true)
     @Override
-    public CreditLimit getCreditLimitByTckn(String userTckn) throws EntityNotFoundException{
-        if(!userRepository.existsByTckn(userTckn)){
-            throw new EntityNotFoundException(User.class.getName(), userTckn);
-        }
-        User user = userRepository.findByTckn(userTckn).get();
-        if (!creditLimitRepository.existsById(user.getCreditLimit().getId())){
+    public CreditLimit getCreditLimitById(Long id) throws EntityNotFoundException{
+        if (!creditLimitRepository.existsById(id)){
             throw new EntityNotFoundException(CreditLimit.class.getName());
         }
-        return creditLimitRepository.findById(user.getCreditLimit().getId()).get();
+        return creditLimitRepository.findById(id).get();
     }
 
 
