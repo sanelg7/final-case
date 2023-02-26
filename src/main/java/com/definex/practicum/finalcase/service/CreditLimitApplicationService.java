@@ -14,5 +14,5 @@ public interface CreditLimitApplicationService {
     CreditLimitApplication approveCreditLimitApplication(Long creditLimitApplicationId , CreditScore creditScore);
 
     @Transactional(readOnly = true)
-    CreditLimit getCreditLimitByTckn(CreditLimitApplicationQueryDto creditLimitApplicationQueryDto) throws EntityNotFoundException;
+    CreditLimit getCreditLimitApplicationResultByTckn(CreditLimitApplicationQueryDto creditLimitApplicationQueryDto) throws EntityNotFoundException;
 }

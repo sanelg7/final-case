@@ -1,5 +1,6 @@
 package com.definex.practicum.finalcase.service.impl;
 
+import com.definex.practicum.finalcase.dto.CreditLimitApplicationQueryDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
 import com.definex.practicum.finalcase.model.CreditLimitApplication;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -142,5 +145,30 @@ public class CreditLimitServiceImpl implements CreditLimitService {
 
         return creditLimitAmount;
     }
+
+    // Used by tests
+    @Transactional(readOnly = true)
+    @Override
+    public CreditLimit getCreditLimitByTckn(CreditLimitApplicationQueryDto creditLimitApplicationQueryDto) throws EntityNotFoundException {
+        String userTckn = creditLimitApplicationQueryDto.getTckn();
+        if(!userRepository.existsByTckn(userTckn)) {
+            throw new EntityNotFoundException(User.class.getName(), userTckn);
+        }
+        User user = userRepository.findByTckn(userTckn).get();
+        if(!creditLimitRepository.existsById(user.getCreditLimit().getId())) {
+            throw new EntityNotFoundException(CreditLimit.class.getName());
+        }
+        // Check if passed tckn and date of birth match.
+        Date receivedDateOfBirth = creditLimitApplicationQueryDto.getDateOfBirth();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        if(formatter.format(user.getDateOfBirth()).equals(formatter.format(receivedDateOfBirth))) {
+            return creditLimitRepository.findById(user.getCreditLimit().getId()).get();
+            // Throwing this as passing "not matched" can be a security concern.
+        } else {
+            throw new EntityNotFoundException(CreditLimit.class.getName());
+        }
+    }
+
+
 
 }
