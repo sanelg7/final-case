@@ -15,11 +15,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users/admin")
-public class UserAdminController extends BaseUserController {
+public class AdminUserController extends BaseUserController {
 
 
     @Autowired
-    public UserAdminController(UserService userService) {
+    public AdminUserController(UserService userService) {
         super(userService);
     }
 

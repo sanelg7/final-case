@@ -39,17 +39,11 @@ public class JwtGenerator {
     }
 
     public boolean validation(String token){
-        System.out.println(token);
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-            /*Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-            Date expiration = claims.getExpiration();
-            if (expiration.before(new Date())) {
-                throw new AuthenticationCredentialsNotFoundException("Expired JWT");
-            }*/
+
             return true;
         }catch (Exception e) {
-            // TODO: Write this error somehow?
             throw new AuthenticationCredentialsNotFoundException("Invalid JWT");
         }
     }

@@ -12,12 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.AnyRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +41,8 @@ public class SecurityConfig {
                 .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
                 .requestMatchers("/credit-scores/admin/**").hasRole("ADMIN")
                 .requestMatchers("/credit-scores/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/credit-limits/admin/**").hasRole("ADMIN")
+                .requestMatchers("/credit-limits/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
