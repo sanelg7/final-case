@@ -1,4 +1,4 @@
-package com.definex.practicum.finalcase.dto;
+package com.definex.practicum.finalcase.dto.user;
 
 import com.definex.practicum.finalcase.model.Role;
 import com.definex.practicum.finalcase.model.User;

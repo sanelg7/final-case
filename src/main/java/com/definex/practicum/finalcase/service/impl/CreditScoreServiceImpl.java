@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.service.impl;
 
-import com.definex.practicum.finalcase.dto.AdminCreditScoreDto;
+import com.definex.practicum.finalcase.dto.creditscore.AdminCreditScoreDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.User;
@@ -82,8 +82,7 @@ public class CreditScoreServiceImpl implements CreditScoreService {
     @Override
     public double generateCreditScoreValue() {
         Random random = new Random();
-        double score = random.nextDouble((1300 - 250) + 1) + 250;
-        return score;
+        return random.nextDouble((1300 - 250) + 1) + 250;
     }
 
     @Override

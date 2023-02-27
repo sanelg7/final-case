@@ -1,14 +1,10 @@
 package com.definex.practicum.finalcase.service;
 
 
-import com.definex.practicum.finalcase.dto.AdminCreateUpdateUserRequestDto;
-import com.definex.practicum.finalcase.dto.RegisterDto;
-import com.definex.practicum.finalcase.dto.UserUpdatePasswordDto;
-import com.definex.practicum.finalcase.exception.EntityCreationException;
-import com.definex.practicum.finalcase.exception.EntityNotFoundException;
-import com.definex.practicum.finalcase.exception.UserUpdateException;
+import com.definex.practicum.finalcase.dto.user.AdminCreateUpdateUserRequestDto;
+import com.definex.practicum.finalcase.dto.user.RegisterDto;
+import com.definex.practicum.finalcase.dto.user.UserUpdatePasswordDto;
 import com.definex.practicum.finalcase.model.User;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;

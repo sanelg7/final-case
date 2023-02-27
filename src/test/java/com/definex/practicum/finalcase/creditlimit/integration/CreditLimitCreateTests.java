@@ -6,7 +6,6 @@ import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.User;
 import com.definex.practicum.finalcase.repository.CreditLimitApplicationRepository;
 import com.definex.practicum.finalcase.repository.UserRepository;
-import com.definex.practicum.finalcase.service.CreditLimitApplicationService;
 import com.definex.practicum.finalcase.service.CreditLimitService;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -14,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

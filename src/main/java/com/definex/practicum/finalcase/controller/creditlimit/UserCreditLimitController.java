@@ -1,4 +1,4 @@
-package com.definex.practicum.finalcase.controller;
+package com.definex.practicum.finalcase.controller.creditlimit;
 
 import com.definex.practicum.finalcase.service.CreditLimitService;
 import org.springframework.web.bind.annotation.RestController;

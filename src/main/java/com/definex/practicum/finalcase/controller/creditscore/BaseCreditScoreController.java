@@ -1,7 +1,7 @@
-package com.definex.practicum.finalcase.controller;
+package com.definex.practicum.finalcase.controller.creditscore;
 
 import com.definex.practicum.finalcase.aop.annotations.RequiresUserRolePermission;
-import com.definex.practicum.finalcase.dto.AdminCreditScoreDto;
+import com.definex.practicum.finalcase.dto.creditscore.AdminCreditScoreDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditScore;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;

@@ -1,6 +1,6 @@
-package com.definex.practicum.finalcase.controller;
+package com.definex.practicum.finalcase.controller.user;
 
-import com.definex.practicum.finalcase.dto.AdminCreateUpdateUserRequestDto;
+import com.definex.practicum.finalcase.dto.user.AdminCreateUpdateUserRequestDto;
 import com.definex.practicum.finalcase.exception.EntityCreationException;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;

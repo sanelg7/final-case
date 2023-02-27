@@ -1,8 +1,8 @@
 package com.definex.practicum.finalcase.service.impl;
 
-import com.definex.practicum.finalcase.dto.AdminCreateUpdateUserRequestDto;
-import com.definex.practicum.finalcase.dto.RegisterDto;
-import com.definex.practicum.finalcase.dto.UserUpdatePasswordDto;
+import com.definex.practicum.finalcase.dto.user.AdminCreateUpdateUserRequestDto;
+import com.definex.practicum.finalcase.dto.user.RegisterDto;
+import com.definex.practicum.finalcase.dto.user.UserUpdatePasswordDto;
 import com.definex.practicum.finalcase.exception.EntityCreationException;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;
@@ -144,10 +144,7 @@ public class UserServiceImpl implements UserService {
         RegisterDto registerDto = adminCreateUpdateUserRequestDto.getRegisterDto();
 
         List<String> roleNames = adminCreateUpdateUserRequestDto.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList());
-        System.out.println(roleNames);
         List<Role> updatedUserRoles = roleRepository.findByRoleNameIn(roleNames);
-
-        System.out.println(updatedUserRoles);
 
         updatedUser.setRoles(updatedUserRoles);
 

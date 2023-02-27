@@ -1,7 +1,7 @@
-package com.definex.practicum.finalcase.controller;
+package com.definex.practicum.finalcase.controller.creditlimitapplication;
 
-import com.definex.practicum.finalcase.dto.CreditLimitApplicationDto;
-import com.definex.practicum.finalcase.dto.CreditLimitApplicationQueryDto;
+import com.definex.practicum.finalcase.dto.creditlimitapplication.CreditLimitApplicationDto;
+import com.definex.practicum.finalcase.dto.creditlimitapplication.CreditLimitApplicationQueryDto;
 import com.definex.practicum.finalcase.exception.CreditLimitApplicationException;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/credit-limit-applications")
 public class CreditLimitApplicationController {
 
-    CreditLimitApplicationService creditLimitApplicationService;
+    private final CreditLimitApplicationService creditLimitApplicationService;
 
     @Autowired
     public CreditLimitApplicationController(CreditLimitApplicationService creditLimitApplicationService) {

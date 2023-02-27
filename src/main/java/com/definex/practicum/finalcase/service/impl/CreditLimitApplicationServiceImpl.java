@@ -1,7 +1,7 @@
 package com.definex.practicum.finalcase.service.impl;
 
-import com.definex.practicum.finalcase.dto.CreditLimitApplicationDto;
-import com.definex.practicum.finalcase.dto.CreditLimitApplicationQueryDto;
+import com.definex.practicum.finalcase.dto.creditlimitapplication.CreditLimitApplicationDto;
+import com.definex.practicum.finalcase.dto.creditlimitapplication.CreditLimitApplicationQueryDto;
 import com.definex.practicum.finalcase.exception.CreditLimitApplicationException;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
@@ -96,20 +96,12 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
             return false;
         }
         // Checking the required fields one by one
-        if(
-                user.getTckn().equals(creditLimitApplicationDto.getTckn())
+        // Use the formatted dates
+        return user.getTckn().equals(creditLimitApplicationDto.getTckn())
                 && user.getFirstName().equalsIgnoreCase(creditLimitApplicationDto.getFirstName())
                 && user.getLastName().equalsIgnoreCase(creditLimitApplicationDto.getLastName())
                 && user.getGsmNumber().equals(creditLimitApplicationDto.getGsmNumber())
-                && formatter.format(user.getDateOfBirth()).equals(formattedDate) // Use the formatted dates
-        ){
-            System.out.println(formatter.format(user.getDateOfBirth()));
-
-            return true;
-        }
-        System.out.println(user.getDateOfBirth());
-        System.out.println(creditLimitApplicationDto.getDateOfBirth());
-        return false;
+                && formatter.format(user.getDateOfBirth()).equals(formattedDate);
     }
 
     // Sets approval, works like a regular update on db
@@ -120,12 +112,7 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
             throw new EntityNotFoundException(CreditLimitApplication.class.getName(), creditLimitApplicationId);
         }
         CreditLimitApplication creditLimitApplication = creditLimitApplicationRepository.findById(creditLimitApplicationId).get();
-        if(creditScore.getCreditScoreValue()<500){
-            creditLimitApplication.setApproved(false);
-
-        }else{
-            creditLimitApplication.setApproved(true);
-        }
+        creditLimitApplication.setApproved(creditScore.getCreditScoreValue() >= 500);
         return creditLimitApplicationRepository.save(creditLimitApplication);
     }
 

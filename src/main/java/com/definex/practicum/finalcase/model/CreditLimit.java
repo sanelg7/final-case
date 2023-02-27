@@ -3,7 +3,6 @@ package com.definex.practicum.finalcase.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity

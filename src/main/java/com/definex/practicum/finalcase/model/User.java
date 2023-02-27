@@ -1,6 +1,5 @@
 package com.definex.practicum.finalcase.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "creditApplications")
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {

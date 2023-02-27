@@ -1,4 +1,4 @@
-package com.definex.practicum.finalcase.dto;
+package com.definex.practicum.finalcase.dto.auth;
 
 import lombok.Data;
 

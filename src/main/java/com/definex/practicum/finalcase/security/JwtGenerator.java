@@ -3,6 +3,7 @@ package com.definex.practicum.finalcase.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -12,25 +13,29 @@ import java.util.UUID;
 
 @Component
 public class JwtGenerator {
-    String jwtSecret = "secret";
 
-    public String generateToken(Authentication authentication, UUID userId){
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    @Value("${jwt.expiration.overhead.millis}")
+    private long jwtExpirationOverhead;
+
+
+    public String generateToken(Authentication authentication, UUID userId) {
         String username = authentication.getName();
         Date current = new Date();
 
-        // TODO: Move these to application.properties.expiration overhead and secret.
-        Date expiration = new Date(current.getTime() + 3600000);
-        String jwt = Jwts.builder()
+        Date expiration = new Date(current.getTime() + jwtExpirationOverhead);
+        return Jwts.builder()
                 .setSubject(username)
                 .claim("userId", userId.toString())
                 .setIssuedAt(current)
                 .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS256, "secret")
+                .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
-        return jwt;
     }
 
-    public String getJwtUsername(String token){
+    public String getJwtUsername(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
@@ -38,12 +43,13 @@ public class JwtGenerator {
         return claims.getSubject();
     }
 
-    public boolean validation(String token){
+    public boolean validation(String token) {
         try {
+            System.out.println(jwtSecret);
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
 
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new AuthenticationCredentialsNotFoundException("Invalid JWT");
         }
     }
