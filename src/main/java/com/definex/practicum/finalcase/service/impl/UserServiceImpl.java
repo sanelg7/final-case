@@ -47,8 +47,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityCreationException(User.class.getName(), registerDto.getGsmNumber());
         }
         User user = new User(registerDto.getTckn(), registerDto.getFirstName(), registerDto.getLastName(), registerDto.getGsmNumber(), registerDto.getDateOfBirth());
-
-        Role roles = roleRepository.findByRoleName("USER").get();
+        Role roles = roleRepository.findByRoleName("USER");
         user.setRoles(Collections.singletonList(roles));
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         return userRepository.save(user);
@@ -177,6 +176,7 @@ public class UserServiceImpl implements UserService {
     public boolean existsById(UUID id){
         return userRepository.existsById(id);
     }
+
 
 
 }

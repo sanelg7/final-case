@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/credit-limit-applications/**").permitAll()
+                .requestMatchers("/auth/**", "/credit-limit-applications/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/users/admin/**").hasRole("ADMIN")
                 .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
                 .requestMatchers("/credit-scores/admin/**").hasRole("ADMIN")

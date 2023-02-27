@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public interface CreditLimitService {
 
-    CreditLimit getCreditLimit(Long id) throws EntityNotFoundException;
 
 
 
