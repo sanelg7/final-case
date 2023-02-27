@@ -32,7 +32,7 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public String unapprovedApplicationSms(CreditLimitApplication creditLimitApplication) {
-        String fullName = creditLimitApplication.getUser().getFirstName() + creditLimitApplication.getUser().getLastName();
+        String fullName = creditLimitApplication.getUser().getFirstName() + " " +  creditLimitApplication.getUser().getLastName();
         String sms = fullName + ", we are sorry to inform you that your credit limit application is not approved due to low credit score. ";
         return sms;
     }

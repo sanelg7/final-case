@@ -76,7 +76,6 @@ public class CreditScoreServiceImpl implements CreditScoreService {
         CreditScore creditScore = creditScoreRepository.findById(id).get();
         creditScoreRepository.delete(creditScore);
         //creditScoreRepository.deleteById(id);
-        System.out.println(creditScoreRepository.findById(id));
     }
 
     // Generates a random credit score between 250 and 1300.

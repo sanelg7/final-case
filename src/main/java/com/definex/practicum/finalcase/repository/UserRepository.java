@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByTckn(String tckn);
     boolean existsByTckn(String tckn);
-
+    User findFirstByOrderById();
     boolean existsByGsmNumber(String gsmNumber);
 
     Optional<User> findByGsmNumber(String gsmNumber);

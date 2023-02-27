@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CreditLimitRepository extends JpaRepository<CreditLimit, Long> {
-
+    CreditLimit findFirstByOrderById();
 }

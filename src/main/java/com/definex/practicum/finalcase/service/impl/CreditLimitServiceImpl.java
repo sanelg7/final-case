@@ -31,14 +31,6 @@ public class CreditLimitServiceImpl implements CreditLimitService {
         this.creditLimitApplicationRepository = creditLimitApplicationRepository;
         this.userRepository = userRepository;
     }
-    @Transactional(readOnly = true)
-    @Override
-    public CreditLimit getCreditLimit(Long id) throws EntityNotFoundException{
-        if(!creditLimitRepository.existsById(id)){
-            throw new EntityNotFoundException(CreditLimit.class.getName(), id);
-        }
-        return creditLimitRepository.findById(id).get();
-    }
 
     @Transactional(readOnly = true)
     @Override

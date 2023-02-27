@@ -52,9 +52,9 @@ public class CreditLimitApplicationServiceImpl implements CreditLimitApplication
     public CreditLimitApplication createCreditLimitApplication(CreditLimitApplicationDto creditLimitApplicationDto) throws EntityNotFoundException, CreditLimitApplicationException{
         String userTckn = creditLimitApplicationDto.getTckn();
         if(!userRepository.existsByTckn(userTckn)){
-            System.out.println(creditLimitApplicationDto);
             throw new EntityNotFoundException(User.class.getName(), userTckn);
         }
+
         User user = userRepository.findByTckn(userTckn).get();
         if(!creditScoreService.existsByUser_Tckn(userTckn)){
             user.setCreditScore(creditScoreService.createCreditScore(user.getId()));

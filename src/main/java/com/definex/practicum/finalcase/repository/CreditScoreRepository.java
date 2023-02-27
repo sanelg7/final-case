@@ -11,5 +11,6 @@ import java.util.UUID;
 public interface CreditScoreRepository extends JpaRepository<CreditScore, Long> {
 
     boolean existsByUser_Tckn(String userTckn);
+    CreditScore findFirstByOrderById();
 
 }

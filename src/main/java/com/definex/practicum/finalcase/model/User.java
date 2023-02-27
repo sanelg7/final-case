@@ -93,6 +93,20 @@ public class User implements UserDetails {
         return getTckn();
     }
 
+    public void addCreditLimitApplication(CreditLimitApplication creditLimitApplication){
+        this.creditApplications.add(creditLimitApplication);
+    }
+    public void removeCreditLimitApplication(CreditLimitApplication creditLimitApplication){
+        this.creditApplications.remove(creditLimitApplication);
+    }
+
+    public void addRole(Role role){
+        this.roles.add(role);
+    }
+    public void removeRole(Role role){
+        this.creditApplications.remove(role);
+    }
+
     // These are not handled. All return hardcoded values.
     @Override
     public boolean isAccountNonExpired() {
