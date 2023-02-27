@@ -1,7 +1,7 @@
 package com.definex.practicum.finalcase.user.integration;
 
-import com.definex.practicum.finalcase.dto.AdminCreateUpdateUserRequestDto;
-import com.definex.practicum.finalcase.dto.RegisterDto;
+import com.definex.practicum.finalcase.dto.user.AdminCreateUpdateUserRequestDto;
+import com.definex.practicum.finalcase.dto.user.RegisterDto;
 import com.definex.practicum.finalcase.model.Role;
 import com.definex.practicum.finalcase.model.User;
 import com.definex.practicum.finalcase.repository.UserRepository;

@@ -1,6 +1,6 @@
 package com.definex.practicum.finalcase.service;
 
-import com.definex.practicum.finalcase.dto.AdminCreditScoreDto;
+import com.definex.practicum.finalcase.dto.creditscore.AdminCreditScoreDto;
 import com.definex.practicum.finalcase.model.CreditScore;
 
 import java.util.UUID;

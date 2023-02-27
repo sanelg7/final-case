@@ -1,7 +1,5 @@
 package com.definex.practicum.finalcase.aop;
 
-import com.definex.practicum.finalcase.exception.UserUpdateException;
-import com.definex.practicum.finalcase.model.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -17,54 +15,27 @@ public class ControllerLoggingAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(ControllerLoggingAspect.class);
 
     // Pointcut for Controller methods.
-    @Pointcut("execution(* com.definex.practicum.finalcase.controller.*.*(..))")
-    public void controllerMethodsPointcut(){}
-/*
-    // Pointcut for Service methods.
-    @Pointcut("execution(* com.definex.practicum.finalcase.service.UserService.*(..))")
-    public void userServiceMethods(){}
-*/
+    @Pointcut("execution(* com.definex.practicum.finalcase.controller.*.*.*(..))")
+    public void controllerMethodsPointcut() {
+    }
+
 
     @Before("controllerMethodsPointcut()")
-    public void beforeControllerLogging(JoinPoint joinPoint){
+    public void beforeControllerLogging(JoinPoint joinPoint) {
         LOGGER.info("Received request : " + joinPoint.getSignature().getName() + ", with args: "
                 + Arrays.toString(joinPoint.getArgs()));
     }
+
     @AfterReturning(value = "controllerMethodsPointcut()", returning = "result")
-    public void afterReturningControllerLogging(JoinPoint joinPoint, Object result){
-        LOGGER.info("Request : " + joinPoint.getSignature().getName() +  ", Returned: "
+    public void afterReturningControllerLogging(JoinPoint joinPoint, Object result) {
+        LOGGER.info("Request : " + joinPoint.getSignature().getName() + ", Returned: "
                 + result);
     }
 
-    /*@AfterThrowing(value = "execution(* com.definex.practicum.finalcase.service.impl.UserServiceImpl.updateUser(..))", throwing = "ex")
-    public void afterThrowingServiceLogging(JoinPoint joinPoint, UserUpdateException ex) {
-        User user = (User) joinPoint.getArgs()[0];
-        LOGGER.error("Error while updating user: " + user + " ,  " + ex.getMessage());
-    }*/
-
-    // Handles the logging of both exceptions.
-   /* @AfterThrowing(value = "execution(* com.definex.practicum.finalcase.controller.UserController.*(..))", throwing = "ex")
-    public void afterThrowingControllerLogging(JoinPoint joinPoint, EntityNotFoundException ex){
-
-        LOGGER.error("User required by method not found." + "Method: " + joinPoint.getSignature().getName() + " with args: " + joinPoint.getArgs());
-
-    }*/
-
- /*   @Before("userServiceMethods()")
-    public void userServiceLogging(JoinPoint joinPoint){
-        LOGGER.info("Service - Incoming data: " + joinPoint.getSignature().getName()
-                + Arrays.toString(joinPoint.getArgs()));
-    }*/
-  /*  @AfterReturning(value = "execution(* com.definex.practicum.finalcase.controller.UserController.deleteUser(..))", returning = "result")
-    public void logDeleteUser(JoinPoint joinPoint, Object result) {
-        Long id = (Long) joinPoint.getArgs()[0];
-        logger.info("User deleted: " + id);
+    @AfterThrowing(pointcut = "controllerMethodsPointcut()", throwing = "ex")
+    public void afterThrowingControllerLogging(JoinPoint joinPoint, Throwable ex) {
+        LOGGER.error("Exception thrown in controller method : " + joinPoint.getSignature().getName() + ", with args: "
+                + Arrays.toString(joinPoint.getArgs()) + ", Exception: " + ex.getMessage());
     }
-
-    @AfterReturning(value = "execution(* com.definex.practicum.finalcase.controller.UserController.updateUser(..))", returning = "result")
-    public void logUpdateUser(JoinPoint joinPoint, Object result) {
-        User user = (User) joinPoint.getArgs()[0];
-        logger.info("User updated: " + user.toString());
-    }*/
 
 }

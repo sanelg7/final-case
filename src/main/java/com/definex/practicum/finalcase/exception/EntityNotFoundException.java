@@ -16,7 +16,7 @@ public class EntityNotFoundException extends RuntimeException{
     private String tckn;
 
     public EntityNotFoundException(String type, Long id){
-        super(String.format("Entity with type :" + type + ", id: " + id + " not found"));
+        super("Entity with type :" + type + ", id: " + id + " not found");
         this.id = id;
         this.type = type;
     }
@@ -30,13 +30,13 @@ public class EntityNotFoundException extends RuntimeException{
     }
 
     public EntityNotFoundException(String type, UUID uuid){
-        super(String.format("User with id: " + uuid + " not found"));
+        super("User with id: " + uuid + " not found");
         this.uuid = uuid;
         this.type = type;
     }
 
     public EntityNotFoundException(String type){
-        super(String.format("Entity not found"));
+        super("Entity not found");
         this.type = type;
     }
 

@@ -15,7 +15,7 @@ public class SmsServiceTests {
 
 
 
-    private SmsServiceImpl smsService = new SmsServiceImpl();
+    private final SmsServiceImpl smsService = new SmsServiceImpl();
 
     @BeforeEach
     public void initMocks() {

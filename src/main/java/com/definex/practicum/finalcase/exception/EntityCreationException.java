@@ -16,14 +16,14 @@ public class EntityCreationException extends RuntimeException{
     private String strVariable;
 
     public EntityCreationException(String type, UUID id){
-        super(String.format("Entity with type :" + type + ", id: " + id + " could not be created."));
+        super("Entity with type :" + type + ", id: " + id + " could not be created.");
         this.id = id;
         this.type = type;
     }
 
 
     public EntityCreationException(String type, String strVariable){
-        super(String.format("Record with unique field: " + strVariable + " already exists."));
+        super("Record with unique field: " + strVariable + " already exists.");
         this.strVariable = strVariable;
         this.type = type;
     }

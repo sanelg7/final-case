@@ -1,10 +1,9 @@
 package com.definex.practicum.finalcase.service;
 
-import com.definex.practicum.finalcase.dto.CreditLimitApplicationQueryDto;
+import com.definex.practicum.finalcase.dto.creditlimitapplication.CreditLimitApplicationQueryDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
 import com.definex.practicum.finalcase.model.CreditLimitApplication;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 

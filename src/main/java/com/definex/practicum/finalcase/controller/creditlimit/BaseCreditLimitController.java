@@ -1,7 +1,7 @@
-package com.definex.practicum.finalcase.controller;
+package com.definex.practicum.finalcase.controller.creditlimit;
 
 import com.definex.practicum.finalcase.aop.annotations.RequiresUserRolePermission;
-import com.definex.practicum.finalcase.dto.GetCreditLimitDto;
+import com.definex.practicum.finalcase.dto.creditlimit.GetCreditLimitDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.model.CreditLimit;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;

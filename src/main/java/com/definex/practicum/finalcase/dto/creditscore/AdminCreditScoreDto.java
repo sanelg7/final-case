@@ -1,4 +1,4 @@
-package com.definex.practicum.finalcase.dto;
+package com.definex.practicum.finalcase.dto.creditscore;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

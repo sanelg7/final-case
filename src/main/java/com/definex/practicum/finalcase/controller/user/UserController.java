@@ -1,7 +1,7 @@
-package com.definex.practicum.finalcase.controller;
+package com.definex.practicum.finalcase.controller.user;
 
 import com.definex.practicum.finalcase.aop.annotations.RequiresUserRolePermission;
-import com.definex.practicum.finalcase.dto.UserUpdatePasswordDto;
+import com.definex.practicum.finalcase.dto.user.UserUpdatePasswordDto;
 import com.definex.practicum.finalcase.exception.EntityNotFoundException;
 import com.definex.practicum.finalcase.exception.UnauthorizedException;
 import com.definex.practicum.finalcase.exception.UserUpdateException;

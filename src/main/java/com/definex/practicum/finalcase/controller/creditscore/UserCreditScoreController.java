@@ -1,4 +1,4 @@
-package com.definex.practicum.finalcase.controller;
+package com.definex.practicum.finalcase.controller.creditscore;
 
 import com.definex.practicum.finalcase.service.CreditScoreService;
 import org.springframework.web.bind.annotation.RestController;

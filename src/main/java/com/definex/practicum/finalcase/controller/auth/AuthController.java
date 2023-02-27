@@ -1,8 +1,8 @@
-package com.definex.practicum.finalcase.controller;
+package com.definex.practicum.finalcase.controller.auth;
 
-import com.definex.practicum.finalcase.dto.LoginResponseDto;
-import com.definex.practicum.finalcase.dto.LoginDto;
-import com.definex.practicum.finalcase.dto.RegisterDto;
+import com.definex.practicum.finalcase.dto.auth.LoginResponseDto;
+import com.definex.practicum.finalcase.dto.auth.LoginDto;
+import com.definex.practicum.finalcase.dto.user.RegisterDto;
 import com.definex.practicum.finalcase.exception.EntityCreationException;
 import com.definex.practicum.finalcase.model.CustomResponseEntity;
 import com.definex.practicum.finalcase.model.User;

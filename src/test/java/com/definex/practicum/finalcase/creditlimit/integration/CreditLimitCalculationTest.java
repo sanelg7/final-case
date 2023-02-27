@@ -1,7 +1,5 @@
 package com.definex.practicum.finalcase.creditlimit.integration;
 
-import com.definex.practicum.finalcase.model.CreditLimit;
-import com.definex.practicum.finalcase.service.CreditLimitService;
 import com.definex.practicum.finalcase.service.impl.CreditLimitServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

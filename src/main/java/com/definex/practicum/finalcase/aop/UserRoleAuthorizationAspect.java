@@ -2,8 +2,6 @@ package com.definex.practicum.finalcase.aop;
 
 import com.definex.practicum.finalcase.exception.UnauthorizedException;
 import com.definex.practicum.finalcase.model.User;
-import com.definex.practicum.finalcase.repository.UserRepository;
-import com.definex.practicum.finalcase.security.CustomUserDetailsService;
 import com.definex.practicum.finalcase.security.JwtAuthenticationFilter;
 import com.definex.practicum.finalcase.security.JwtGenerator;
 import com.definex.practicum.finalcase.service.UserService;
@@ -13,8 +11,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -26,9 +22,11 @@ import java.util.stream.Collectors;
 @Aspect
 @Component
 public class UserRoleAuthorizationAspect {
-    private JwtGenerator jwtGenerator;
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-    private UserService userService;
+    private final JwtGenerator jwtGenerator;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final UserService userService;
+
+    // Checks incoming authorized requests and restricts role based access based on user
 
     @Autowired
     public UserRoleAuthorizationAspect(JwtGenerator jwtGenerator, JwtAuthenticationFilter jwtAuthenticationFilter, UserService userService) {
@@ -47,8 +45,7 @@ public class UserRoleAuthorizationAspect {
         if (token != null && jwtGenerator.validation(token)) {
             String username = jwtGenerator.getJwtUsername(token);
             User user = userService.getUserByTckn(username);
-            List<String> authorities = user.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toList());
+            List<String> authorities = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
             if (authorities.contains("ROLE_USER") && !authorities.contains("ROLE_ADMIN")) {
                 Object[] signatureArgs = joinPoint.getArgs();
                 if (signatureArgs.length > 0 && signatureArgs[0] instanceof UUID) {

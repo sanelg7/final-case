@@ -1,7 +1,7 @@
 package com.definex.practicum.finalcase.user.integration;
 
-import com.definex.practicum.finalcase.dto.AdminCreateUpdateUserRequestDto;
-import com.definex.practicum.finalcase.dto.RegisterDto;
+import com.definex.practicum.finalcase.dto.user.AdminCreateUpdateUserRequestDto;
+import com.definex.practicum.finalcase.dto.user.RegisterDto;
 import com.definex.practicum.finalcase.exception.EntityCreationException;
 import com.definex.practicum.finalcase.model.Role;
 import com.definex.practicum.finalcase.model.User;
@@ -57,7 +57,7 @@ public class UserCreateTests {
         assertEquals("John", registeredUser.getFirstName());
         assertEquals("Doe", registeredUser.getLastName());
         assertEquals("8888888888", registeredUser.getGsmNumber());
-        assertTrue(registeredUser.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList()).contains("USER"));
+        assertTrue(registeredUser.getRoles().stream().map(Role::getRoleName).toList().contains("USER"));
         assertEquals(new Date(90, 0, 1), registeredUser.getDateOfBirth());
         assertTrue(passwordEncoder.matches(registerDto.getPassword(), registeredUser.getPassword()));
     }

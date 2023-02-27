@@ -1,25 +1,21 @@
 package com.definex.practicum.finalcase.user.unit;
 
-import com.definex.practicum.finalcase.dto.UserUpdatePasswordDto;
+import com.definex.practicum.finalcase.dto.user.UserUpdatePasswordDto;
 import com.definex.practicum.finalcase.model.User;
 import com.definex.practicum.finalcase.repository.UserRepository;
-import com.definex.practicum.finalcase.service.UserService;
 import com.definex.practicum.finalcase.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
